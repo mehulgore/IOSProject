@@ -73,7 +73,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
          "10:00 PM",
          "10:30 PM",
          "11:00 AM",
-         "11:30 PM",]
+         "11:30 PM"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +85,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         datePicker.minimumDate = today
         datePicker.maximumDate = maxDate
         print (datePicker.minimumDate!)
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "close"), object: nil)
         datePicker.addTarget(self, action: #selector(InputSchedViewController.dateChanged), for: UIControlEvents.valueChanged)
         
@@ -102,6 +103,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             
             InputSchedViewController.user = User(uid: currentUser.uid, firstName: firstName, lastName: lastName, email: email, minDate: self.datePicker.minimumDate!,
                                                  maxDate: self.datePicker.maximumDate!)
+            
             InputSchedViewController.user?.getDoNotDisturbTime(type: "startTime",
                                                                completion: { (value) in
                                                                 if (value == "") {
@@ -109,6 +111,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
                                                                     InputSchedViewController.user?.setDoNotDisturbTime(type: "stopTime", time: "8:00 AM")
                                                                 }
                                                                 InputSchedViewController.user?.clearPast()
+                                                                InputSchedViewController.user?.fill()
                                                                 InputSchedViewController.user?.getSched(date: today, completion: { () in
                                                                     self.reload()
                                                                 })

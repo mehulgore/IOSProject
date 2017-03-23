@@ -15,13 +15,18 @@ class User {
     let ref = FIRDatabase.database().reference()
     let numOptions = 2
     let timeSlots = 48
+    let numDays = 14
+    let emptyArray =  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     
     let uid:String
     let firstName: String
     let lastName: String
     let email:String
-    let friends: [User]?
-    let schedules: NSDictionary
+    //let friends: [User]?
+    //let schedules: NSDictionary
     var currentSched = [Int]()
     let today: Date
     let minDate: Date
@@ -34,25 +39,35 @@ class User {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
-        self.friends = []
-        self.schedules = NSDictionary()
+        //self.friends = []
+        //self.schedules = NSDictionary()
         self.today = Date()
         self.minDate = minDate
         self.maxDate = maxDate
     }
     
-//    func fill () {
-////        print ("PRINTING SHIT HERE LOOK")
-////        print (start)
-////        print (end)
-//        var temp = self.minDate
-//        while temp.compare(self.maxDate) != .orderedDescending {
-//            toggleEntry (index: 0, date: temp)
-//            toggleEntry (index: 0, date: temp)
-//            temp = Calendar.current.date(byAdding: .day, value: 1, to: temp)!
-//        }
-//    }
-
+    func fill () {
+        var temp = self.minDate
+        while temp.compare(self.maxDate) != .orderedDescending {
+            self.getSchedIfNull(date: temp)
+            temp = Calendar.current.date(byAdding: .day, value: 1, to: temp)!
+        }
+    }
+    
+    func getSchedIfNull (date: Date) {
+        let dateString = dateToString(date: date)
+        let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
+        // dont know how to handle this closure shit
+        allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            let scheds = snapshot.value as! NSDictionary
+            if (scheds[dateString] == nil) {
+                allSchedsRef.child(dateString).setValue(self.emptyArray)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     func toggleEntry (index: Int, date: Date) {
         let dateString = dateToString(date: date)
         InputSchedViewController.schedToDisplay[index] += 1
@@ -66,7 +81,7 @@ class User {
     func getSched (date: Date, completion: @escaping ()->Void) {
         let dateString = dateToString(date: date)
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
-        // dont know how to handle this closure shit 
+        // dont know how to handle this closure shit
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             print ("PRINTING SHIT HERE LOOK")
@@ -81,19 +96,17 @@ class User {
                 completion()
             }
             else {
+                allSchedsRef.child(dateString).setValue(self.emptyArray)
                 print("schedule for \(dateString) is NOT THERE SHIT")
-                print(scheds[dateString] ?? "array is nil")
-                InputSchedViewController.schedToDisplay = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                completion() 
+                //print(scheds[dateString] ?? "array is nil")
+                InputSchedViewController.schedToDisplay = self.emptyArray
+                completion()
             }
         }) { (error) in
             print(error.localizedDescription)
         }
     }
-
+    
     private func dateToString (date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
@@ -110,7 +123,6 @@ class User {
             for (key, value) in scheds {
                 let sched = value as! [Int]
                 let dateString = key as! String
-                self.addDoNotDisturb(dateString: dateString, sched: sched)
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .medium
                 let date = dateFormatter.date(from: key as! String)
@@ -123,13 +135,17 @@ class User {
         }
     }
     
-    private func addDoNotDisturb (dateString: String, sched: [Int]){
-        var currSched = sched
-        let startIndex = InputSchedViewController.timeStrings.index(of: self.doNotDisturbStart)!
-        let stopIndex = InputSchedViewController.timeStrings.index(of: self.doNotDisturbStop)!
+    private func onDoNotDisturbChanged (dateString: String, sched: [Int]) {
+
+ }
+    
+    func addDoNotDisturb  (dateString: String, startTime: String, stopTime: String, array: [Int]) {
+        var currSched = array
+        let startIndex = InputSchedViewController.timeStrings.index(of: startTime)!
+        let stopIndex = InputSchedViewController.timeStrings.index(of: stopTime)!
         var counter = startIndex
         while (counter != stopIndex) {
-            if (counter == 47) {
+            if (counter == self.timeSlots) {
                 counter = 0
             }
             currSched[counter] = 2
@@ -139,23 +155,33 @@ class User {
         allSchedsRef.child(dateString).setValue(currSched)
     }
     
-    
     func setDoNotDisturbTime (type: String, time: String) {
         //if ref.child("users").child(self.uid).va) == nil {
-            ref.child("users").child(self.uid).child("doNotDisturb").child(type).setValue(time)
-            if (type == "startTime") {
-                self.doNotDisturbStart = time
+        ref.child("users").child(self.uid).child("doNotDisturb").child(type).setValue(time)
+        print ("set a time to \(time)") 
+        let doNotDisturbRef = ref.child("users").child(self.uid).child("doNotDisturb")
+        let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
+        doNotDisturbRef.observe(FIRDataEventType.value, with: { (snapshot) in
+            // Get user value
+            let times = snapshot.value as! NSDictionary
+            self.doNotDisturbStart = times["startTime"] as! String
+            self.doNotDisturbStop = times["stopTime"] as! String
+            
+            allSchedsRef.observeSingleEvent(of: .value, with: { (Snapshot) in
+                // Get user value
+                let scheds = Snapshot.value as! NSDictionary
+                for (key, value) in scheds {
+                    let sched = value as! [Int]
+                    let dateString = key as! String
+                    self.addDoNotDisturb (dateString: dateString, startTime: self.doNotDisturbStart, stopTime: self.doNotDisturbStop, array: sched)
+                }
+            }) { (error) in
+                print(error.localizedDescription)
             }
-            else {
-                self.doNotDisturbStop = time
-            }
-//        }
-//        else {
-//            ref.child("users").child(self.uid).child("doNotDisturb").child("startTime").setValue("12:00 AM")
-//            ref.child("users").child(self.uid).child("doNotDisturb").child("stopTime").setValue("8:00 AM")
-//            self.doNotDisturbStart = "12:00 AM"
-//            self.doNotDisturbStop = "8:00 AM"
-//        }
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func getDoNotDisturbTime (type: String, completion: @escaping (String) -> Void) {
@@ -167,17 +193,17 @@ class User {
             }
             else {
                 let startOrStop = userDict["doNotDisturb"] as! NSDictionary
-                if (type == "startTime") {
-                    self.doNotDisturbStart = startOrStop[type] as! String
-                }
-                else {
-                    self.doNotDisturbStop = startOrStop[type] as! String
-                }
+                //if (type == "startTime") {
+                //    self.doNotDisturbStart = startOrStop[type] as! String
+                //}
+                //else {
+                //    self.doNotDisturbStop = startOrStop[type] as! String
+                //}
                 completion(startOrStop[type] as! String)
                 
             }
         })
     }
-
+    
     
 }

@@ -32,8 +32,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginClicked(_ sender: UIButton) {
-//        let email = emailTextField.text!
-//        let password = passwordTextField.text!
+        //let email = emailTextField.text!
+        //let password = passwordTextField.text!
         
         let email = "wiz@gmail.com"
         let password = "password"
