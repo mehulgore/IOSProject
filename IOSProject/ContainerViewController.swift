@@ -41,15 +41,15 @@ class ContainerViewController: UIViewController {
     }
     
     private func openMenu () {
-        //print("menu open")
+        print("menu open")
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        //print("offset now \(scrollView.contentOffset.x)")
+        print("offset now \(scrollView.contentOffset.x)")
     }
     
     private func closeMenu (animated: Bool = true) {
-        //print("menu close")
+        print("menu close")
         scrollView.setContentOffset(CGPoint(x: sidebarWidth, y:0), animated: animated)
-        //print("offset now \(scrollView.contentOffset.x)")
+        print("offset now \(scrollView.contentOffset.x)")
     }
     
     func closeMenuOnNotification () {
