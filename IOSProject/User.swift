@@ -146,7 +146,7 @@ class User {
     
     private func onDoNotDisturbChanged (dateString: String, sched: [Int]) {
 
- }
+    }
     
     func addDoNotDisturb  (dateString: String, startTime: String, stopTime: String, array: [Int]) {
         var currSched = array
@@ -225,6 +225,5 @@ class User {
             }
         })
     }
-    
     
 }

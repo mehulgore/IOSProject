@@ -25,6 +25,7 @@
 		296A250B1E78ADD3004943B0 /* SidebarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */; };
 		2998950B1E7B4BBF00CA4679 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998950A1E7B4BBF00CA4679 /* User.swift */; };
 		2998950F1E7F323100CA4679 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998950E1E7F323100CA4679 /* SettingsViewController.swift */; };
+		2DCF0BC61E85DA10006E87E0 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF0BC51E85DA10006E87E0 /* EventsViewController.swift */; };
 		692539BEFBC2440184BA98ED /* libPods-IOSProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D2B0A06EEDE50EE9B59008 /* libPods-IOSProject.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarTableViewController.swift; sourceTree = "<group>"; };
 		2998950A1E7B4BBF00CA4679 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2998950E1E7F323100CA4679 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2DCF0BC51E85DA10006E87E0 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		7B8FC65300B209C3DCB14955 /* Pods-IOSProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IOSProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IOSProject/Pods-IOSProject.debug.xcconfig"; sourceTree = "<group>"; };
 		B46C72E181CBDA4B991D0130 /* Pods-IOSProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IOSProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-IOSProject/Pods-IOSProject.release.xcconfig"; sourceTree = "<group>"; };
 		E1D2B0A06EEDE50EE9B59008 /* libPods-IOSProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IOSProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +167,7 @@
 				296A24BE1E724729004943B0 /* InputSchedViewController.swift */,
 				296A24C21E7609AB004943B0 /* ShowGroupsViewController.swift */,
 				296A24C41E760B97004943B0 /* GroupDetailViewController.swift */,
+				2DCF0BC51E85DA10006E87E0 /* EventsViewController.swift */,
 				296A24C61E760BE1004943B0 /* CreateGroupViewController.swift */,
 				296A25081E7881DC004943B0 /* ContainerViewController.swift */,
 				296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */,
@@ -391,6 +394,7 @@
 				296A250B1E78ADD3004943B0 /* SidebarTableViewController.swift in Sources */,
 				296A24BD1E723C43004943B0 /* LoginViewController.swift in Sources */,
 				296A248E1E723475004943B0 /* IOSProject.xcdatamodeld in Sources */,
+				2DCF0BC61E85DA10006E87E0 /* EventsViewController.swift in Sources */,
 				296A24C71E760BE1004943B0 /* CreateGroupViewController.swift in Sources */,
 				296A24861E723475004943B0 /* AppDelegate.swift in Sources */,
 				296A24BB1E723C2D004943B0 /* RegisterViewController.swift in Sources */,
