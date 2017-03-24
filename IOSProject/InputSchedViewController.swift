@@ -113,6 +113,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
                                                                 InputSchedViewController.user?.clearPast()
                                                                 InputSchedViewController.user?.fill()
                                                                 InputSchedViewController.user?.getSched(date: today, completion: { () in
+                                                                    InputSchedViewController.user?.populateWithDoNotDisturb()
                                                                     self.reload()
                                                                 })
             })
@@ -190,6 +191,11 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.setSelected(false, animated: false)
             break
         case 1:
+            cell.isSelected = true
+            cell.setSelected(true, animated: false)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            break
+        case 2:
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)

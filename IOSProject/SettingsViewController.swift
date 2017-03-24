@@ -21,6 +21,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "close"), object: nil)
+        
         startTimePicker.addTarget(self, action: #selector(SettingsViewController.startTimeChanged), for: UIControlEvents.valueChanged)
         stopTimePicker.addTarget(self, action: #selector(SettingsViewController.stopTimeChanged), for: UIControlEvents.valueChanged)
         
@@ -46,6 +48,9 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func toggleMenu(_ sender: UIBarButtonItem) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toggleMenu"), object: nil)
+    }
 
     func startTimeChanged () {
         let dateFormatter = DateFormatter()

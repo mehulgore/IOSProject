@@ -71,7 +71,7 @@ class User {
     func toggleEntry (index: Int, date: Date) {
         let dateString = dateToString(date: date)
         InputSchedViewController.schedToDisplay[index] += 1
-        if (InputSchedViewController.schedToDisplay[index] == numOptions) {
+        if (InputSchedViewController.schedToDisplay[index] >= numOptions) {
             InputSchedViewController.schedToDisplay[index] = 0
         }
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
@@ -121,7 +121,7 @@ class User {
             // Get user value
             let scheds = snapshot.value as! NSDictionary
             for (key, value) in scheds {
-                let sched = value as! [Int]
+                _ = value as! [Int]
                 let dateString = key as! String
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .medium
@@ -155,33 +155,36 @@ class User {
         allSchedsRef.child(dateString).setValue(currSched)
     }
     
-    func setDoNotDisturbTime (type: String, time: String) {
-        //if ref.child("users").child(self.uid).va) == nil {
-        ref.child("users").child(self.uid).child("doNotDisturb").child(type).setValue(time)
-        print ("set a time to \(time)") 
+    func populateWithDoNotDisturb () {
         let doNotDisturbRef = ref.child("users").child(self.uid).child("doNotDisturb")
-        let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
-        doNotDisturbRef.observe(FIRDataEventType.value, with: { (snapshot) in
+        doNotDisturbRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let times = snapshot.value as! NSDictionary
             self.doNotDisturbStart = times["startTime"] as! String
             self.doNotDisturbStop = times["stopTime"] as! String
-            
+            let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
             allSchedsRef.observeSingleEvent(of: .value, with: { (Snapshot) in
                 // Get user value
                 let scheds = Snapshot.value as! NSDictionary
                 for (key, value) in scheds {
                     let sched = value as! [Int]
                     let dateString = key as! String
+                    print (key)
                     self.addDoNotDisturb (dateString: dateString, startTime: self.doNotDisturbStart, stopTime: self.doNotDisturbStop, array: sched)
                 }
             }) { (error) in
                 print(error.localizedDescription)
             }
-            
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func setDoNotDisturbTime (type: String, time: String) {
+        //if ref.child("users").child(self.uid).va) == nil {
+        ref.child("users").child(self.uid).child("doNotDisturb").child(type).setValue(time)
+        print ("set a time to \(time)")
+        self.populateWithDoNotDisturb()
     }
     
     func getDoNotDisturbTime (type: String, completion: @escaping (String) -> Void) {
