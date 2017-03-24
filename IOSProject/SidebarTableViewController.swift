@@ -41,9 +41,13 @@ class SidebarTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print (indexPath.row)
-        if (indexPath.row != 5) {
-            return
-        } else {
+        if (indexPath.row == 1) {
+            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(switchToInputTab), userInfo: nil, repeats: false)
+        }
+        if (indexPath.row == 2) {
+            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(switchToSettingsTab), userInfo: nil, repeats: false)
+        }
+        if (indexPath.row == 5) {
             let firebaseAuth = FIRAuth.auth()
             do {
                 try firebaseAuth?.signOut()
@@ -52,8 +56,12 @@ class SidebarTableViewController: UITableViewController {
                 print ("Error signing out: %@", signOutError)
             }
         }
-        
-        
+    }
+    
+    func switchToInputTab () {
+    }
+    
+    func switchToSettingsTab () {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -28,7 +28,6 @@ class User {
     //let friends: [User]?
     //let schedules: NSDictionary
     var currentSched = [Int]()
-    let today: Date
     let minDate: Date
     let maxDate: Date
     var doNotDisturbStart = ""
@@ -41,7 +40,6 @@ class User {
         self.email = email
         //self.friends = []
         //self.schedules = NSDictionary()
-        self.today = Date()
         self.minDate = minDate
         self.maxDate = maxDate
     }
@@ -114,9 +112,20 @@ class User {
         return dateFormatter.string(from: date)
     }
     
+    private func getLocalTime () -> Date {
+        let today = Date()
+        print (today)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.local
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let local = dateFormatter.string(from: today)
+        print (local)
+        return dateFormatter.date(from: local)!
+    }
+    
     func clearPast () {
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
-        let today = Date()
+        let today = getLocalTime()
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let scheds = snapshot.value as! NSDictionary
@@ -149,6 +158,15 @@ class User {
                 counter = 0
             }
             currSched[counter] = 2
+            counter += 1
+        }
+        while (counter != startIndex) {
+            if (counter == self.timeSlots) {
+                counter = 0
+            }
+            if (currSched[counter] == 2) {
+                currSched[counter] = 0
+            }
             counter += 1
         }
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")

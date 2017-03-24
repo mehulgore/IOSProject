@@ -72,7 +72,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
          "9:30 PM",
          "10:00 PM",
          "10:30 PM",
-         "11:00 AM",
+         "11:00 PM",
          "11:30 PM"]
     
     override func viewDidLoad() {
@@ -80,7 +80,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         
         scheduleTableView.allowsMultipleSelection = true
         
-        let today = Date()
+        let today = getLocalTime()
         let maxDate = Calendar.current.date(byAdding: .day, value: self.daysToDisplay, to: today)
         datePicker.minimumDate = today
         datePicker.maximumDate = maxDate
@@ -123,10 +123,25 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view.
     }
     
+    // need to reload everytime tab view is switched
+    //override func viewDidAppear(_ animated: Bool) {
+    //    self.reload()
+    //}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func getLocalTime () -> Date {
+        let today = Date()
+        print (today)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.local
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let local = dateFormatter.string(from: today)
+        print (local)
+        return dateFormatter.date(from: local)!
     }
     
     @IBAction func toggleMenu(_ sender: UIBarButtonItem) {
@@ -194,11 +209,13 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            cell.contentView.backgroundColor = UIColor.orange
             break
         case 2:
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            cell.contentView.backgroundColor = UIColor.red
             break
         default:
             break
