@@ -12,68 +12,27 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class InputSchedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    // properties
     @IBOutlet weak var scheduleTableView: UITableView!
-    
     @IBOutlet weak var datePicker: UIDatePicker!
-    
     var isSidebarShowing = false
-    
     var daysToDisplay = 14
-    
     internal static var user: User? = nil
-    
     internal static var schedToDisplay = [Int]()
-    
     internal static var timeStrings =
-        ["12:00 AM",
-         "12:30 AM",
-         "1:00 AM",
-         "1:30 AM",
-         "2:00 AM",
-         "2:30 AM",
-         "3:00 AM",
-         "3:30 AM",
-         "4:00 AM",
-         "4:30 AM",
-         "5:00 AM",
-         "5:30 AM",
-         "6:00 AM",
-         "6:30 AM",
-         "7:00 AM",
-         "7:30 AM",
-         "8:00 AM",
-         "8:30 AM",
-         "9:00 AM",
-         "9:30 AM",
-         "10:00 AM",
-         "10:30 AM",
-         "11:00 AM",
-         "11:30 AM",
+        ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM",
+         "2:00 AM", "2:30 AM", "3:00 AM", "3:30 AM",
+         "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
+         "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM",
+         "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM",
+         "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
          
-         "12:00 PM",
-         "12:30 PM",
-         "1:00 PM",
-         "1:30 PM",
-         "2:00 PM",
-         "2:30 PM",
-         "3:00 PM",
-         "3:30 PM",
-         "4:00 PM",
-         "4:30 PM",
-         "5:00 PM",
-         "5:30 PM",
-         "6:00 PM",
-         "6:30 PM",
-         "7:00 PM",
-         "7:30 PM",
-         "8:00 PM",
-         "8:30 PM",
-         "9:00 PM",
-         "9:30 PM",
-         "10:00 PM",
-         "10:30 PM",
-         "11:00 PM",
-         "11:30 PM"]
+         "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM",
+         "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM",
+         "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+         "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM",
+         "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM",
+         "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,6 +92,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    // converts from absolute time and returns standard local time
     private func getLocalTime () -> Date {
         let today = Date()
         print (today)
@@ -144,6 +104,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         return dateFormatter.date(from: local)!
     }
     
+    // toggles navigation panel from the left
     @IBAction func toggleMenu(_ sender: UIBarButtonItem) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toggleMenu"), object: nil)
     }
@@ -215,7 +176,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor.red
+            cell.contentView.backgroundColor = UIColor.purple
             break
         default:
             break
@@ -259,6 +220,4 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
-    
 }

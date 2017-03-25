@@ -221,7 +221,6 @@ class User {
                 //    self.doNotDisturbStop = startOrStop[type] as! String
                 //}
                 completion(startOrStop[type] as! String)
-                
             }
         })
     }
