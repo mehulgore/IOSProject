@@ -10,8 +10,6 @@ import UIKit
 
 class GroupDetailViewController: UIViewController {
     
-    var user: User? = nil
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

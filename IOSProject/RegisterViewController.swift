@@ -81,8 +81,15 @@ class RegisterViewController: UIViewController {
                                "email": email]
                 userRef.updateChildValues(context)
                 
+                let userNamesRef = ref.child("userNames")
+                let fullName = firstName + " " + lastName
+                userNamesRef.updateChildValues([fullName: uid])
+                
                 self.shouldAllowRegistration = true
                 self.performSegue(withIdentifier: "register", sender: self)
+                
+                Main.user = User(uid: uid, firstName: firstName, lastName: lastName, email: email)
+                Main.user?.firstTimeSetup()
         })
     }
     

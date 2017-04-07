@@ -1,5 +1,5 @@
 //
-//  InputSchedViewController.swift
+//  Main.swift
 //  IOSProject
 //
 //  Created by Mehul Gore on 3/9/17.
@@ -16,31 +16,14 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var scheduleTableView: UITableView!
     @IBOutlet weak var datePicker: UIDatePicker!
     var isSidebarShowing = false
-    var daysToDisplay = 14
-    internal static var user: User? = nil
-    internal static var schedToDisplay = [Int]()
-    internal static var timeStrings =
-        ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM",
-         "2:00 AM", "2:30 AM", "3:00 AM", "3:30 AM",
-         "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
-         "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM",
-         "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM",
-         "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-         
-         "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM",
-         "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM",
-         "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
-         "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM",
-         "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM",
-         "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         scheduleTableView.allowsMultipleSelection = true
         
-        let today = getLocalTime()
-        let maxDate = Calendar.current.date(byAdding: .day, value: self.daysToDisplay, to: today)
+        let today = Main.getLocalTime()
+        let maxDate = Calendar.current.date(byAdding: .day, value: Main.numDays, to: today)
         datePicker.minimumDate = today
         datePicker.maximumDate = maxDate
         print (datePicker.minimumDate!)
@@ -52,34 +35,9 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             print ("NO USER SIGNED IN")
             return
         }
-        let ref = FIRDatabase.database().reference()
-        ref.child("users").child(currentUser.uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            let nodes = snapshot.value as? NSDictionary
-            //print(nodes ?? "NODES")
-            let firstName = nodes?["firstName"] as? String ?? "default first name"
-            let lastName = nodes?["lastName"] as? String ?? "default last name"
-            let email = nodes?["email"] as? String ?? "default email"
-            
-            InputSchedViewController.user = User(uid: currentUser.uid, firstName: firstName, lastName: lastName, email: email, minDate: self.datePicker.minimumDate!,
-                                                 maxDate: self.datePicker.maximumDate!)
-            
-            InputSchedViewController.user?.getDoNotDisturbTime(type: "startTime",
-                                                               completion: { (value) in
-                                                                if (value == "") {
-                                                                    InputSchedViewController.user?.setDoNotDisturbTime(type: "startTime", time: "12:00 AM")
-                                                                    InputSchedViewController.user?.setDoNotDisturbTime(type: "stopTime", time: "8:00 AM")
-                                                                }
-                                                                InputSchedViewController.user?.clearPast()
-                                                                InputSchedViewController.user?.fill()
-                                                                InputSchedViewController.user?.getSched(date: today, completion: { () in
-                                                                    InputSchedViewController.user?.populateWithDoNotDisturb()
-                                                                    self.reload()
-                                                                })
-            })
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-        // Do any additional setup after loading the view.
+        
+        self.reload()
+                // Do any additional setup after loading the view.
     }
     
     // need to reload everytime tab view is switched
@@ -93,16 +51,6 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     // converts from absolute time and returns standard local time
-    private func getLocalTime () -> Date {
-        let today = Date()
-        print (today)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone.local
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let local = dateFormatter.string(from: today)
-        print (local)
-        return dateFormatter.date(from: local)!
-    }
     
     // toggles navigation panel from the left
     @IBAction func toggleMenu(_ sender: UIBarButtonItem) {
@@ -121,17 +69,17 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
      */
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        InputSchedViewController.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
+        Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        InputSchedViewController.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
+        Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
     }
     
     func dateChanged () {
         print ("date changed to \(datePicker.date)")
-        InputSchedViewController.user?.getSched(date: datePicker.date, completion: { () in
-            print (InputSchedViewController.schedToDisplay)
+        Main.user?.getSched(date: datePicker.date, completion: { () in
+            print (Main.schedToDisplay)
             self.reload()
         })
     }
@@ -149,8 +97,8 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(InputSchedViewController.schedToDisplay)
-        return InputSchedViewController.schedToDisplay.count
+        print(Main.schedToDisplay)
+        return Main.schedToDisplay.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -160,8 +108,8 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         cell = self.scheduleTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = InputSchedViewController.timeStrings[indexPath.row]
-        switch InputSchedViewController.schedToDisplay[indexPath.row] {
+        cell.textLabel?.text = Main.timeStrings[indexPath.row]
+        switch Main.schedToDisplay[indexPath.row] {
         case 0:
             cell.isSelected = false
             cell.setSelected(false, animated: false)

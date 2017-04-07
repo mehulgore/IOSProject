@@ -26,10 +26,10 @@ class SettingsViewController: UIViewController {
         startTimePicker.addTarget(self, action: #selector(SettingsViewController.startTimeChanged), for: UIControlEvents.valueChanged)
         stopTimePicker.addTarget(self, action: #selector(SettingsViewController.stopTimeChanged), for: UIControlEvents.valueChanged)
         
-        InputSchedViewController.user?.getDoNotDisturbTime(type: "startTime", completion: { (value) in
+        Main.user?.getDoNotDisturbTime(type: "startTime", completion: { (value) in
             self.startTime = value
         })
-        InputSchedViewController.user?.getDoNotDisturbTime(type: "stopTime", completion: { (value) in
+        Main.user?.getDoNotDisturbTime(type: "stopTime", completion: { (value) in
             self.stopTime = value
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "h:mm a"
@@ -59,7 +59,7 @@ class SettingsViewController: UIViewController {
         dateFormatter.pmSymbol = "PM"
         let startTime = dateFormatter.string(from: startTimePicker.date)
         print ("new start time should be \(startTime)") 
-        InputSchedViewController.user?.setDoNotDisturbTime(type: "startTime", time: startTime)
+        Main.user?.setDoNotDisturbTime(type: "startTime", time: startTime)
     }
     
     func stopTimeChanged () {
@@ -68,7 +68,7 @@ class SettingsViewController: UIViewController {
         dateFormatter.amSymbol = "AM"
         dateFormatter.pmSymbol = "PM"
         let stopTime = dateFormatter.string(from: stopTimePicker.date)
-        InputSchedViewController.user?.setDoNotDisturbTime(type: "stopTime", time: stopTime)
+        Main.user?.setDoNotDisturbTime(type: "stopTime", time: stopTime)
     }
     
     /*

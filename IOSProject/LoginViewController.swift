@@ -10,6 +10,7 @@ import UIKit
 import GoogleSignIn
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 class LoginViewController: UIViewController {
     
@@ -61,6 +62,29 @@ class LoginViewController: UIViewController {
             
             self.shouldLogin = true
             self.performSegue(withIdentifier: "login", sender: self)
+            
+                        
+            let ref = FIRDatabase.database().reference()
+            ref.child("users").child((user?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
+                let nodes = snapshot.value as? NSDictionary
+                //print(nodes ?? "NODES")
+                let firstName = nodes?["firstName"] as? String ?? "default first name"
+                let lastName = nodes?["lastName"] as? String ?? "default last name"
+                let email = nodes?["email"] as? String ?? "default email"
+                
+                Main.user = User(uid: (user?.uid)!, firstName: firstName, lastName: lastName, email: email) 
+                
+                Main.user?.getDoNotDisturbTime(type: "startTime",
+                                               completion: { (value) in
+                                                Main.user?.clearPast()
+                                                Main.user?.fill()
+                                                Main.user?.getSched(date: Main.today, completion: { () in
+                                                    Main.user?.populateWithDoNotDisturb()
+                                                })
+                })
+            }) { (error) in
+                print(error.localizedDescription)
+            }
         }
     }
   
