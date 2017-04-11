@@ -8,8 +8,9 @@
 
 import UIKit
 
-class CreateGroupViewController: UIViewController {
-
+class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var groupUsers = [String: String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +21,7 @@ class CreateGroupViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     /*
     // MARK: - Navigation

@@ -57,7 +57,6 @@ class User {
     func getSchedIfNull (date: Date) {
         let dateString = Main.dateToString(date: date)
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
-        // dont know how to handle this closure shit
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let scheds = snapshot.value as? NSDictionary {
             if (scheds[dateString] == nil) {
@@ -85,15 +84,13 @@ class User {
     func getSched (date: Date, completion: @escaping ()->Void) {
         let dateString = Main.dateToString(date: date)
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
-        // dont know how to handle this closure shit
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
-            print ("PRINTING SHIT HERE LOOK")
             print(dateString)
             let scheds = snapshot.value as! NSDictionary
             //print(scheds)
             if (scheds[dateString] != nil) {
-                print("schedule for \(dateString) is in the database")
+                print("getsched: schedule for \(dateString) is in the database")
                 //print(scheds[dateString] ?? "array")
                 //self.currentSched = (scheds[dateString] as? [Int])!
                 Main.schedToDisplay = (scheds[dateString] as? [Int])!
@@ -101,7 +98,7 @@ class User {
             }
             else {
                 allSchedsRef.child(dateString).setValue(Main.emptyArray)
-                print("schedule for \(dateString) is NOT THERE SHIT")
+                print("getsched: schedule for \(dateString) is NOT THERE")
                 //print(scheds[dateString] ?? "array is nil")
                 Main.schedToDisplay = Main.emptyArray
                 completion()
