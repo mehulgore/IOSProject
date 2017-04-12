@@ -205,7 +205,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fV0-jo-kq0" style="IBUITableViewCellStyleDefault" id="ySY-aw-I6d">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupcell" textLabel="fV0-jo-kq0" style="IBUITableViewCellStyleDefault" id="ySY-aw-I6d">
                                         <rect key="frame" x="0.0" y="28" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ySY-aw-I6d" id="opq-Wd-lPa">
@@ -231,17 +231,32 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="j9A-ur-eaw">
+                                <rect key="frame" x="16" y="426" width="343" height="134"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendcell" id="00g-q5-CJt">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="00g-q5-CJt" id="VJZ-PB-f9N">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2gq-hr-adG">
+                                <rect key="frame" x="0.0" y="368" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olV-UL-02t">
-                                <rect key="frame" x="164" y="549" width="46" height="30"/>
+                                <rect key="frame" x="164" y="568" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Create"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPw-wc-i1P">
-                                <rect key="frame" x="172" y="361" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add"/>
                                 <connections>
-                                    <segue destination="G5S-cY-dSf" kind="show" id="ON3-O9-Ls1"/>
+                                    <action selector="createClicked:" destination="Vy1-SE-AQ7" eventType="touchUpInside" id="p14-DS-iZZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -249,7 +264,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="zAM-0v-IYI"/>
                     <connections>
-                        <outlet property="searchDisplayController" destination="QaB-qn-Zaf" id="7CX-cD-LuJ"/>
+                        <outlet property="friendsTableView" destination="j9A-ur-eaw" id="r5D-hW-cqh"/>
+                        <outlet property="groupNameTextField" destination="8VU-nL-w15" id="hBx-ai-f8A"/>
+                        <outlet property="groupTableView" destination="nld-UV-6HO" id="cMK-8E-lbd"/>
+                        <outlet property="searchBar" destination="2gq-hr-adG" id="fdo-kZ-Mhs"/>
+                        <outlet property="searchDisplayController" destination="WDc-zJ-h22" id="j0i-3v-oMC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EkR-aO-Uat" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -261,8 +280,16 @@
                         <outlet property="searchResultsDelegate" destination="Vy1-SE-AQ7" id="aiZ-XJ-cf7"/>
                     </connections>
                 </searchDisplayController>
+                <searchDisplayController id="WDc-zJ-h22">
+                    <connections>
+                        <outlet property="delegate" destination="Vy1-SE-AQ7" id="4LK-qR-hX7"/>
+                        <outlet property="searchContentsController" destination="Vy1-SE-AQ7" id="j6e-Hg-1Jk"/>
+                        <outlet property="searchResultsDataSource" destination="Vy1-SE-AQ7" id="8N8-DN-Kss"/>
+                        <outlet property="searchResultsDelegate" destination="Vy1-SE-AQ7" id="CbG-F6-rRH"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="4542" y="2122"/>
+            <point key="canvasLocation" x="4541.6000000000004" y="2121.5892053973016"/>
         </scene>
         <!--Add Friends View Controller-->
         <scene sceneID="V43-tJ-4Mv">
@@ -288,14 +315,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Vy1-SE-AQ7" kind="show" id="I3i-cJ-BlG"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2F9-7q-Mef">
-                                <rect key="frame" x="0.0" y="55" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -318,7 +342,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5462" y="2122"/>
+            <point key="canvasLocation" x="5740" y="2122"/>
         </scene>
         <!--Event Detail View Controller-->
         <scene sceneID="v8q-DE-OXt">
@@ -1081,6 +1105,5 @@
         <segue reference="53g-Au-fWE"/>
         <segue reference="F6Y-Cp-bRn"/>
         <segue reference="5Ot-T0-Xh7"/>
-        <segue reference="I3i-cJ-BlG"/>
     </inferredMetricsTieBreakers>
 </document>

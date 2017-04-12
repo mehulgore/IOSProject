@@ -21,6 +21,8 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
     var isSearching: Bool = false
     var name = ""
     var uid = ""
+    var groupName = ""
+    var shouldPerform: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,22 +46,7 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         // Do any additional setup after loading the view.
     }
 
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        isSearching = true;
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        isSearching = false;
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false;
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false;
-    }
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.filteredUsers = self.userArray.filter({ (text) -> Bool in
             let tmp: NSString = text as NSString
@@ -94,27 +81,32 @@ class AddFriendsViewController: UIViewController, UITableViewDataSource, UITable
         if(isSearching){
             cell.textLabel?.text = self.filteredUsers[indexPath.row]
         } else {
-            cell.textLabel?.text = self.userArray[indexPath.row];
+            cell.textLabel?.text = self.userArray[indexPath.row]
         }
-        return cell;
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
+        print (cell?.textLabel?.text ?? "")
         self.name = (cell?.textLabel?.text)!
         self.uid = self.userNamesDict[name]!
+        print (self.name)
+        print (self.uid)
+        print (self.groupName)
+        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups").child(self.groupName).child(self.name)
+        ref.setValue(self.uid)
     }
     
-    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return shouldPerform
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let groupVC = segue.destination as! CreateGroupViewController
-        groupVC.groupUsers[self.name] = self.uid
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    
-
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        //let groupVC = segue.destination as! CreateGroupViewController
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//    }
 }
