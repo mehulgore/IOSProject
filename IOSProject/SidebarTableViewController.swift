@@ -14,7 +14,6 @@ class SidebarTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -41,12 +40,6 @@ class SidebarTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print (indexPath.row)
-        if (indexPath.row == 1) {
-            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(switchToInputTab), userInfo: nil, repeats: false)
-        }
-        if (indexPath.row == 2) {
-            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(switchToSettingsTab), userInfo: nil, repeats: false)
-        }
         if (indexPath.row == 5) {
             let firebaseAuth = FIRAuth.auth()
             do {
@@ -56,12 +49,17 @@ class SidebarTableViewController: UITableViewController {
                 print ("Error signing out: %@", signOutError)
             }
         }
+        else {
+            (UIApplication.shared.delegate as! AppDelegate).tabBar!.selectedIndex = indexPath.row - 1
+        }
     }
     
     func switchToInputTab () {
+        
     }
     
     func switchToSettingsTab () {
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -30,27 +30,13 @@ class Main {
     internal static var timeSlots = 48
     internal static var numDays = 14
     internal static var emptyArray =  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     
-    internal static var today = Main.getLocalTime()
+    internal static var rawDate = Date()
+    internal static var today = rawDate.getLocalTime()
     internal static var maxDate = Calendar.current.date(byAdding: .day, value: Main.numDays, to: today)
-    
-    // TODO this date function returns the wrong thing
-    
-    internal static func getLocalTime () -> Date {
-        let today = Date()
-        //print (today)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone.local
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let local = dateFormatter.string(from: today)
-        print ("in get local time the local time is \(local)")
-        print ("in get local time the returned time is \(dateFormatter.date(from: local)!)")
-        return dateFormatter.date(from: local)!
-    }
-    
     
     internal static func dateToString (date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -58,6 +44,19 @@ class Main {
         dateFormatter.dateStyle = .medium
         return dateFormatter.string(from: date)
     }
+}
 
-    
+// adds these methods to the NSDate class
+extension Date {
+    // return local time date object
+    func getLocalTime() -> Date {
+        // set time zone
+        let timeZone = NSTimeZone.local
+        // used to set granularity of time
+        let seconds : TimeInterval = Double(timeZone.secondsFromGMT(for:self as Date))
+        // convert from absolute to local time
+        let localDate = Date(timeInterval: seconds, since: self as Date)
+        // return localDate
+        return localDate
+    }
 }

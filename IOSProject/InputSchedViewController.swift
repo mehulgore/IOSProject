@@ -19,10 +19,11 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        (UIApplication.shared.delegate as! AppDelegate).tabBar = self.tabBarController
         
         scheduleTableView.allowsMultipleSelection = true
         
-        let today = Main.getLocalTime()
+        let today = Main.today
         let maxDate = Calendar.current.date(byAdding: .day, value: Main.numDays, to: today)
         datePicker.minimumDate = today
         datePicker.maximumDate = maxDate

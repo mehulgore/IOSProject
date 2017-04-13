@@ -7,13 +7,47 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
-class GroupDetailViewController: UIViewController {
+class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+    @IBOutlet weak var groupMembersTableView: UITableView!
+    
+    var groupName = ""
+    var members = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        groupMembersTableView.delegate = self
+        groupMembersTableView.dataSource = self
+        
+        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups").child(self.groupName)
+        ref.observeSingleEvent(of: .value, with: { (Snapshot) in
+            // Get user value
+            let groupDict = Snapshot.value as! NSDictionary
+            self.members = groupDict.allKeys as! [String]
+            self.groupMembersTableView.reloadData()
+            print (self.members)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
         // Do any additional setup after loading the view.
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
+        print (members[indexPath.row])
+        cell.textLabel?.text = members[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return members.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 
     override func didReceiveMemoryWarning() {

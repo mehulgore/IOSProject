@@ -110,7 +110,7 @@ class User {
     
     func clearPast () {
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
-        let today = Main.getLocalTime()
+        let today = Main.today
         print ("in clear past function todays date is \(today)")
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value

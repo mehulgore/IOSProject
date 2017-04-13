@@ -27,6 +27,7 @@
 		2998950B1E7B4BBF00CA4679 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998950A1E7B4BBF00CA4679 /* User.swift */; };
 		2998950F1E7F323100CA4679 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998950E1E7F323100CA4679 /* SettingsViewController.swift */; };
 		29C378C61E9C4E050003ACFA /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C378C51E9C4E050003ACFA /* AddFriendsViewController.swift */; };
+		29C3790F1E9EF3280003ACFA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C3790E1E9EF3280003ACFA /* TabBarController.swift */; };
 		2DCF0BC81E85EE9D006E87E0 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF0BC71E85EE9D006E87E0 /* CreateEventViewController.swift */; };
 		2DCF0BCA1E85F0A9006E87E0 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF0BC91E85F0A9006E87E0 /* EventsViewController.swift */; };
 		2DCF0BCC1E85F157006E87E0 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF0BCB1E85F157006E87E0 /* EventDetailViewController.swift */; };
@@ -77,6 +78,7 @@
 		2998950A1E7B4BBF00CA4679 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2998950E1E7F323100CA4679 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		29C378C51E9C4E050003ACFA /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
+		29C3790E1E9EF3280003ACFA /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		2DCF0BC71E85EE9D006E87E0 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		2DCF0BC91E85F0A9006E87E0 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		2DCF0BCB1E85F157006E87E0 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */,
 				2998950E1E7F323100CA4679 /* SettingsViewController.swift */,
 				29C378C51E9C4E050003ACFA /* AddFriendsViewController.swift */,
+				29C3790E1E9EF3280003ACFA /* TabBarController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				296A24BF1E724729004943B0 /* InputSchedViewController.swift in Sources */,
 				296A24C51E760B97004943B0 /* GroupDetailViewController.swift in Sources */,
 				296A25091E7881DC004943B0 /* ContainerViewController.swift in Sources */,
+				29C3790F1E9EF3280003ACFA /* TabBarController.swift in Sources */,
 				2DCF0BC81E85EE9D006E87E0 /* CreateEventViewController.swift in Sources */,
 				296A24C31E7609AB004943B0 /* ShowGroupsViewController.swift in Sources */,
 				296A250B1E78ADD3004943B0 /* SidebarTableViewController.swift in Sources */,
