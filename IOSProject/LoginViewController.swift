@@ -33,20 +33,20 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginClicked(_ sender: UIButton) {
-        //let email = emailTextField.text!
-        //let password = passwordTextField.text!
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
         
-        let email = "wiz@gmail.com"
-        let password = "password"
+        //let email = "jj@gmail.com"
+        //let password = "password"
         
-//        if (email == "" || password == "") {
-//            let alert = UIAlertController(title: "Error", message: "Did not fill out all fields!", preferredStyle: UIAlertControllerStyle.alert)
-//            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) { (action:UIAlertAction) in
-//            }
-//            alert.addAction(action)
-//            self.present(alert, animated: true, completion: nil)
-//            return
-//        }
+        if (email == "" || password == "") {
+            let alert = UIAlertController(title: "Error", message: "Did not fill out all fields!", preferredStyle: UIAlertControllerStyle.alert)
+            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) { (action:UIAlertAction) in
+            }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
         
         FIRAuth.auth()?.signIn(withEmail: email, password: password) { (user, error) in
             
@@ -59,9 +59,6 @@ class LoginViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 return
             }
-            
-            self.shouldLogin = true
-            self.performSegue(withIdentifier: "login", sender: self)
             
                         
             let ref = FIRDatabase.database().reference()
@@ -79,7 +76,10 @@ class LoginViewController: UIViewController {
                                                 Main.user?.clearPast()
                                                 Main.user?.fill()
                                                 Main.user?.getSched(date: Main.today, completion: { () in
-                                                    Main.user?.populateWithDoNotDisturb()
+                                                    Main.user?.populateWithDoNotDisturb(completion: { () in
+                                                        self.shouldLogin = true
+                                                        self.performSegue(withIdentifier: "login", sender: self)
+                                                        })
                                                 })
                 })
             }) { (error) in

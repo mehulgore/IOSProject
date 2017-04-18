@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     @IBOutlet weak var groupMembersTableView: UITableView!
+    @IBOutlet weak var groupNameLabel: UILabel!
     
     var groupName = ""
     var members = [String]()
@@ -19,6 +20,8 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        groupNameLabel.text = groupName
+        
         groupMembersTableView.delegate = self
         groupMembersTableView.dataSource = self
         

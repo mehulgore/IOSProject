@@ -47,6 +47,9 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             // Get user value
             self.userNamesDict = Snapshot.value as! [String: String]
             self.userArray = Array(self.userNamesDict.keys)
+            if let index = self.userArray.index(of: (Main.user?.fullName)!) {
+                self.userArray.remove(at: index)
+            }
             self.friendsTableView.reloadData()
             //print (self.userArray)
         }) { (error) in
@@ -161,6 +164,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             print (self.name)
             print (self.uid)
             print (self.groupName)
+            groupUsers[(Main.user?.fullName)!] = Main.user?.uid
             let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups").child(self.groupName)
             ref.setValue(self.groupUsers)
         }
@@ -174,8 +178,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let destination = segue.destination as! AddFriendsViewController
-        destination.groupName = groupNameTextField.text!
     }
     
     

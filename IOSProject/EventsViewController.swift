@@ -7,15 +7,39 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
-class EventsViewController: UIViewController {
+class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
-    var user: User? = nil
-
+    var events = [String]()
+    var groupName = ""
+    var eventName = ""
+    
+    @IBOutlet weak var eventTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        eventTableView.delegate = self
+        eventTableView.dataSource = self
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events")
+        ref.observeSingleEvent(of: .value, with: { (Snapshot) in
+            // Get user value
+            guard Snapshot.exists() else {
+                self.events = [""]
+                return 
+            }
+            
+            let dict = Snapshot.value as! NSDictionary
+            self.events = dict.allKeys as! [String]
+            self.eventTableView.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,15 +51,53 @@ class EventsViewController: UIViewController {
     @IBAction func toggleMenu(_ sender: UIBarButtonItem) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toggleMenu"), object: nil)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        self.eventName = (cell?.textLabel?.text)!
+        Main.user?.findAvailableTimes(event: self.eventName, completion: { () in
+            self.performSegue(withIdentifier: "eventDetail", sender: self)
+        })
+//        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events").child((cell?.textLabel?.text)!)
+//        ref.observeSingleEvent(of: .value, with: { (Snapshot) in
+//            // Get user value
+//            guard Snapshot.exists() else {
+//                print ("!!!!!!!!event doesnt exist")
+//                return
+//            }
+//            
+//            let dict = Snapshot.value as? NSDictionary
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "event", for: indexPath)
+        cell.textLabel?.text = events[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return events.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "eventDetail") {
+            let destination = segue.destination as! EventDetailViewController
+            destination.eventName = self.eventName
+        }
     }
-    */
+    
 
 }

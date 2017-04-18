@@ -7,13 +7,44 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
-class EventDetailViewController: UIViewController {
+class EventDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var eventNameLabel: UILabel!
+    
+    @IBOutlet weak var availableTimesTableView: UITableView!
+    
+    var eventName = ""
+    var availableTimes: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
+        availableTimesTableView.delegate = self
+        availableTimesTableView.dataSource = self
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        eventNameLabel.text = eventName
+        FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events").child(eventName).child("availableTimes").observeSingleEvent(of: .value, with: { (snapshot) in
+            guard snapshot.exists() else {
+                self.availableTimes = []
+                return
+            }
+            
+            let dict = snapshot.value as! NSDictionary
+            for (date, times) in dict {
+                let dateString = date as! String
+                let timesDict = times as! [String: String]
+                for (key, value) in timesDict {
+                    self.availableTimes.append("\(dateString)   \(key) - \(value)")
+                }
+            }
+            self.availableTimesTableView.reloadData()
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +52,21 @@ class EventDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "time", for: indexPath)
+        //print (self.availableTimes[indexPath.row])
+        cell.textLabel?.text = self.availableTimes[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.availableTimes.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
 
     /*
     // MARK: - Navigation

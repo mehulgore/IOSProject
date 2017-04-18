@@ -1,4 +1,4 @@
-//
+ //
 //  Main.swift
 //  IOSProject
 //
@@ -41,6 +41,14 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
                 // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        Main.user?.getSched(date: Main.today, completion: { () in
+            Main.user?.populateWithDoNotDisturb(completion: { () in
+                self.scheduleTableView.reloadData()
+            })
+        })
+    }
+    
     // need to reload everytime tab view is switched
     //override func viewDidAppear(_ animated: Bool) {
     //    self.reload()
@@ -70,6 +78,8 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
      */
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = scheduleTableView.cellForRow(at: indexPath)
+        cell?.contentView.backgroundColor = UIColor.green
         Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
     }
     
@@ -119,13 +129,13 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor.orange
+            cell.contentView.backgroundColor = UIColor.green
             break
         case 2:
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor.purple
+            cell.contentView.backgroundColor = UIColor.cyan
             break
         default:
             break

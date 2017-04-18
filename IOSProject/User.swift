@@ -17,7 +17,8 @@ class User {
     let firstName: String
     let lastName: String
     let email:String
-
+    let fullName: String
+    
     var currentSched = [Int]()
     var doNotDisturbStart = ""
     var doNotDisturbStop = ""
@@ -27,6 +28,7 @@ class User {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.fullName = self.firstName + " " + self.lastName
     }
     
     func fill () {
@@ -38,7 +40,7 @@ class User {
         }
     }
     
-    func firstTimeSetup () {
+    func firstTimeSetup (completion: @escaping () -> ()) {
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
         var temp = Main.today
         print ("in first time setup today is \(temp)")
@@ -48,7 +50,9 @@ class User {
         }
         self.setDoNotDisturbTime(type: "startTime", time: "12:00 AM")
         self.setDoNotDisturbTime(type: "stopTime", time: "8:00 AM")
-        self.populateWithDoNotDisturb()
+        self.populateWithDoNotDisturb(completion: { () in
+            completion()
+        })
         
         // TODO make do not disturb populate on new registered user and set sched to display
         // to todays schedule
@@ -59,9 +63,9 @@ class User {
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let scheds = snapshot.value as? NSDictionary {
-            if (scheds[dateString] == nil) {
-                allSchedsRef.child(dateString).setValue(Main.emptyArray)
-            }
+                if (scheds[dateString] == nil) {
+                    allSchedsRef.child(dateString).setValue(Main.emptyArray)
+                }
             }
             else {
                 allSchedsRef.child(dateString).setValue(Main.emptyArray)
@@ -115,16 +119,25 @@ class User {
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if let scheds = snapshot.value as? NSDictionary {
-            for (key, value) in scheds {
-                _ = value as! [Int]
-                let dateString = key as! String
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .medium
-                let date = dateFormatter.date(from: key as! String)
-                if (date?.compare(today) == .orderedAscending) {
-                    allSchedsRef.child(dateString).removeValue()
+                for (key, value) in scheds {
+                    _ = value as! [Int]
+                    let dateString = key as! String
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .medium
+                    let date = dateFormatter.date(from: dateString)
+                    let calendar = NSCalendar.current
+                    
+                    // Replace the hour (time) of both dates with 00:00
+                    let date1 = calendar.startOfDay(for: date!)
+                    let date2 = calendar.startOfDay(for: today)
+                    let components = calendar.dateComponents([.day], from: date1, to: date2)
+                    print (components.day ?? "fudge")
+                    if (components.day! >= 1) {
+                        print ("today: \(today)")
+                        print ("date : \(date)")
+                        allSchedsRef.child(dateString).removeValue()
+                    }
                 }
-            }
             }
         }) { (error) in
             print(error.localizedDescription)
@@ -132,7 +145,7 @@ class User {
     }
     
     private func onDoNotDisturbChanged (dateString: String, sched: [Int]) {
-
+        
     }
     
     func addDoNotDisturb  (dateString: String, startTime: String, stopTime: String, array: [Int]) {
@@ -148,19 +161,19 @@ class User {
             counter += 1
         }
         while (counter != startIndex) {
-            if (counter == Main.timeSlots) {
-                counter = 0
-            }
             if (currSched[counter] == 2) {
                 currSched[counter] = 0
             }
             counter += 1
+            if (counter == Main.timeSlots) {
+                counter = 0
+            }
         }
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
         allSchedsRef.child(dateString).setValue(currSched)
     }
     
-    func populateWithDoNotDisturb () {
+    func populateWithDoNotDisturb (completion: @escaping () -> ()) {
         let doNotDisturbRef = ref.child("users").child(self.uid).child("doNotDisturb")
         doNotDisturbRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
@@ -177,6 +190,7 @@ class User {
                     print (key)
                     self.addDoNotDisturb (dateString: dateString, startTime: self.doNotDisturbStart, stopTime: self.doNotDisturbStop, array: sched)
                 }
+                completion()
             }) { (error) in
                 print(error.localizedDescription)
             }
@@ -189,7 +203,7 @@ class User {
         //if ref.child("users").child(self.uid).va) == nil {
         ref.child("users").child(self.uid).child("doNotDisturb").child(type).setValue(time)
         print ("set a time to \(time)")
-        self.populateWithDoNotDisturb()
+        self.populateWithDoNotDisturb(completion: {() in })
     }
     
     func getDoNotDisturbTime (type: String, completion: @escaping (String) -> Void) {
@@ -210,6 +224,113 @@ class User {
                 completion(startOrStop[type] as! String)
             }
         })
+    }
+    
+    func findAvailableTimes (event: String, completion: @escaping () -> ()) {
+        var masterDict = fillMasterDict()
+        self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+            let users = snapshot.value as? NSDictionary
+            //print (users)
+            
+            let uidNode = users?[self.uid] as! [String: Any]
+            let eventsNode = uidNode["events"] as! [String: Any]
+            let eventNode = eventsNode[event] as! [String: Any]
+            let groupName = eventNode["group"] as! String
+            let duration = eventNode["duration"] as! Int
+            let groupsNode = uidNode["groups"] as! [String: Any]
+            let groupNode = groupsNode[groupName] as! [String: String]
+            //let uidArray = groupNode.values as! [String]
+            
+            for (_, userID) in groupNode {
+                //print (groupNode)
+                let thisUid = users?[userID] as! [String: Any]
+                //print (thisUid)
+                let schedules = thisUid["schedules"] as! [String: [Int]]
+                for (date, sched) in schedules {
+                    if (masterDict?[date] != nil) {
+                        masterDict = self.addToMasterDict(dict: masterDict!, date: date, array: sched)
+                    }
+                }
+                
+            }
+            
+        print (masterDict ?? "master dict not found")
+        self.lookThroughMasterDict(dict: masterDict!, duration: duration, eventName: event)
+        completion()
+            //print (uidArray)
+            //let groupName = users?[self.uid]["events"][event]["group"]
+            //let group = users?[self.uid]["groups"]
+        })
+        
+        
+    }
+    
+    func addToMasterDict (dict: [String: [Int]], date: String, array: [Int]) -> [String: [Int]]? {
+        var result = dict
+        var temp = result[date]
+        for (index, element) in (array.enumerated()) {
+            temp?[index] += element
+        }
+        
+        result[date] = temp
+        return result
+    }
+    
+    
+    func fillMasterDict () -> [String: [Int]]? {
+        var result: [String: [Int]] = [:]
+        var temp = Main.today
+        while temp.compare(Main.maxDate!) != .orderedDescending {
+            result[Main.dateToString(date: temp)] = Main.emptyArray
+            temp = Calendar.current.date(byAdding: .day, value: 1, to: temp)!
+        }
+        return result
+    }
+    
+    func lookThroughMasterDict (dict: [String: [Int]], duration: Int, eventName: String) {
+        var result: [String: [String: String]] = [:]
+        let slotsToSearch = duration * 2
+        for (date, sched) in dict {
+            var startIndex = 0
+            var endIndex = 0
+            var count = 0
+            for (index, element) in sched.enumerated() {
+                if (element == 0 && index != Main.timeSlots - 1) {
+                    count += 1
+                }
+                else {
+//                    if (index == Main.timeSlots - 1) {
+//                        count += 1
+//                    }
+                    if (count > slotsToSearch) {
+                        endIndex = index
+                        startIndex = index - count
+                        if (startIndex < 0) {
+                            startIndex = 0
+                        }
+                        if (endIndex == Main.timeSlots - 1) {
+                            endIndex = 0
+                        }
+                        if (startIndex == Main.timeSlots - 1) {
+                            startIndex = 0
+                        }
+                        if result[date] == nil {
+                            result[date] = [Main.timeStrings[startIndex] : Main.timeStrings[endIndex]]
+                        }
+                        else {
+                            var inner = result[date]
+                            inner?[Main.timeStrings[startIndex]] = Main.timeStrings[endIndex]
+                            result[date] = inner
+                            print (result)
+                        }
+                    }
+                    count = 0
+                }
+                
+            }
+        }
+        print (result)
+        self.ref.child("users").child(self.uid).child("events").child(eventName).child("availableTimes").setValue(result)
     }
     
 }
