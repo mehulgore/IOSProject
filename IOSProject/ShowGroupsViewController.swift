@@ -13,7 +13,7 @@ import Firebase
 class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var groupTableView: UITableView!
-
+    
     var groups = [String]()
     var currentGroup = ""
     var shouldPerform = false
@@ -21,7 +21,7 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "close"), object: nil)
-
+        
         groupTableView.delegate = self
         groupTableView.dataSource = self
         
@@ -34,13 +34,12 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
             // Get user value
             guard Snapshot.exists() else {
                 self.groups = []
-                return 
+                return
             }
             let groupDict = Snapshot.value as! NSDictionary
             self.groups = groupDict.allKeys as! [String]
             self.groupTableView.reloadData()
-            print (self.groups)
-
+            
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -55,11 +54,10 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
-        print (groups[indexPath.row])
         cell.textLabel?.text = groups[indexPath.row]
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
@@ -75,7 +73,6 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func toggleMenu(_ sender: UIBarButtonItem) {
-        print ("clicked toggle menu from groups")
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toggleMenu"), object: nil)
     }
     
@@ -83,10 +80,10 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
         performSegue(withIdentifier: "createGroup", sender: self)
     }
     
-
+    
     
     // MARK: - Navigation
-
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if (identifier == "groupDetail") {
             return shouldPerform
@@ -105,6 +102,6 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
             destination.groupName = self.currentGroup
         }
     }
- 
-
+    
+    
 }

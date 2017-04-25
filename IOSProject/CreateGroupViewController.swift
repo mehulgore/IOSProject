@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate {
     lazy var groupUsers: [String: String] = [:]
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -41,6 +41,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         self.groupTableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendcell")
         
         self.searchBar.delegate = self
+        groupNameTextField.delegate = self
         
         let ref = FIRDatabase.database().reference().child("userNames")
         ref.observeSingleEvent(of: .value, with: { (Snapshot) in
@@ -51,14 +52,10 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
                 self.userArray.remove(at: index)
             }
             self.friendsTableView.reloadData()
-            //print (self.userArray)
         }) { (error) in
             print(error.localizedDescription)
         }
         
-        
-        //        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups").child(self.groupName).child(self.name)
-        // Do any additional setup after loading the view.
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -100,12 +97,10 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         if (tableView == self.groupTableView) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "groupcell", for: indexPath)
             let groupNames = Array(groupUsers.keys)
-            //print (groupNames)
             cell.textLabel?.text = groupNames[indexPath.row]
             return cell
         }
         else {
-            //print (self.userArray)
             let cell = tableView.dequeueReusableCell(withIdentifier: "friendcell", for: indexPath)
             if(isSearching){
                 cell.textLabel?.text = self.filteredUsers[indexPath.row]
@@ -131,11 +126,9 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView == self.friendsTableView) {
             let cell = tableView.cellForRow(at: indexPath)
-            print (cell?.textLabel?.text ?? "")
             self.name = (cell?.textLabel?.text)!
             self.uid = self.userNamesDict[name]!
             groupUsers[self.name] = self.uid
-            print (self.groupUsers)
             self.groupTableView.reloadData()
         }
     }
@@ -161,9 +154,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         }
         else {
             self.groupName = groupNameTextField.text!
-            print (self.name)
-            print (self.uid)
-            print (self.groupName)
             groupUsers[(Main.user?.fullName)!] = Main.user?.uid
             let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups").child(self.groupName)
             ref.setValue(self.groupUsers)
@@ -179,6 +169,23 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
+    
+    // From the Apple documentation: Asks the delegate if the text field
+    // should process the pressing of the return button.
+    //
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // 'First Responder' is the same as 'input focus'.
+        // We are removing input focus from the text field.
+        groupNameTextField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user touches on the main view (outside the UITextField).
+    //
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     
     
 }

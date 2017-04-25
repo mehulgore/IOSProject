@@ -11,7 +11,7 @@ import Firebase
 import FirebaseDatabase
 
 class EventDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var eventNameLabel: UILabel!
     
     @IBOutlet weak var availableTimesTableView: UITableView!
@@ -21,7 +21,7 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         availableTimesTableView.delegate = self
         availableTimesTableView.dataSource = self
         // Do any additional setup after loading the view.
@@ -40,21 +40,24 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
                 let dateString = date as! String
                 let timesDict = times as! [String: String]
                 for (key, value) in timesDict {
-                    self.availableTimes.append("\(dateString)   \(key) - \(value)")
+                    self.availableTimes.append("\(dateString) \(key) - \(value)")
                 }
             }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
+            dateFormatter.amSymbol = "AM"
+            dateFormatter.pmSymbol = "PM"
+            self.availableTimes = self.availableTimes.sorted(by: {dateFormatter.date(from: $0.substring(to: $0.index($0.startIndex, offsetBy: 20)))! < dateFormatter.date(from: $1.substring(to: $1.index($1.startIndex, offsetBy: 20)))!})
             self.availableTimesTableView.reloadData()
         })
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "time", for: indexPath)
-        //print (self.availableTimes[indexPath.row])
         cell.textLabel?.text = self.availableTimes[indexPath.row]
         return cell
     }
@@ -66,16 +69,16 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
-
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

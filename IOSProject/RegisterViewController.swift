@@ -11,17 +11,32 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var registerButton: UIButton!
     
     var shouldAllowRegistration = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
+        
+        addBorder(field: firstNameTextField)
+        addBorder(field: lastNameTextField)
+        addBorder(field: emailTextField)
+        addBorder(field: passwordTextField)
+        addBorder(field: confirmPasswordTextField)
+        
+        registerButton.layer.cornerRadius = 15
         
         // Do any additional setup after loading the view.
     }
@@ -102,9 +117,37 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    func addBorder(field : UITextField){
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.darkGray.cgColor
+        border.frame = CGRect(x: 0, y: field.frame.size.height - width, width:  field.frame.size.width, height: field.frame.size.height)
+        
+        border.borderWidth = width
+        field.layer.addSublayer(border)
+        field.layer.masksToBounds = true
+    }
+    
     @IBAction func userHasAccountBtn(_ sender: Any) {
         //shouldAllowRegistration = true
         //self.performSegue(withIdentifier: "hasAccount", sender: self)
+    }
+    
+    // From the Apple documentation: Asks the delegate if the text field
+    // should process the pressing of the return button.
+    //
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // 'First Responder' is the same as 'input focus'.
+        // We are removing input focus from the text field.
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user touches on the main view (outside the UITextField).
+    //
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     

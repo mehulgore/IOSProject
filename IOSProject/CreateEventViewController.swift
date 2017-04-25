@@ -10,8 +10,8 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
-class CreateEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class CreateEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+    
     @IBOutlet weak var eventNameTextField: UITextField!
     
     @IBOutlet weak var durationLabel: UILabel!
@@ -31,8 +31,7 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
         
         groupTableView.delegate = self
         groupTableView.dataSource = self
-        
-
+        eventNameTextField.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -44,12 +43,11 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
             let groupDict = Snapshot.value as! NSDictionary
             self.groups = groupDict.allKeys as! [String]
             self.groupTableView.reloadData()
-            print (self.groups)
         }) { (error) in
             print(error.localizedDescription)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -68,7 +66,6 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "group", for: indexPath)
-        print (groups[indexPath.row])
         cell.textLabel?.text = groups[indexPath.row]
         return cell
     }
@@ -103,16 +100,31 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
         ref.child("duration").setValue(stepper.value)
         ref.child("group").setValue("\(self.groupName)")
     }
-
+    
+    // From the Apple documentation: Asks the delegate if the text field
+    // should process the pressing of the return button.
+    //
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // 'First Responder' is the same as 'input focus'.
+        // We are removing input focus from the text field.
+        eventNameTextField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user touches on the main view (outside the UITextField).
+    //
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

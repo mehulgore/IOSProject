@@ -39,18 +39,17 @@ class SidebarTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print (indexPath.row)
         if (indexPath.row == 5) {
             let firebaseAuth = FIRAuth.auth()
             do {
                 try firebaseAuth?.signOut()
-                print ("user signed out successfully")
             } catch let signOutError as NSError {
                 print ("Error signing out: %@", signOutError)
             }
         }
         else {
             (UIApplication.shared.delegate as! AppDelegate).tabBar!.selectedIndex = indexPath.row - 1
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "close"), object: nil)
         }
     }
     
@@ -86,7 +85,6 @@ class SidebarTableViewController: UITableViewController {
             cell = tableView.dequeueReusableCell(withIdentifier: "signOut", for: indexPath)
             break
         default:
-            cell = tableView.dequeueReusableCell(withIdentifier: "title", for: indexPath)
             break
         }
         // Configure the cell...

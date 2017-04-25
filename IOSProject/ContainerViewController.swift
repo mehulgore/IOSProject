@@ -12,7 +12,7 @@ class ContainerViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     let sidebarWidth:CGFloat = 260
-
+    
     override func viewDidLoad() {
         DispatchQueue.main.async {
             self.closeMenu(animated: false)
@@ -26,7 +26,7 @@ class ContainerViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -41,37 +41,33 @@ class ContainerViewController: UIViewController {
     }
     
     private func openMenu () {
-        print("menu open")
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        print("offset now \(scrollView.contentOffset.x)")
     }
     
     private func closeMenu (animated: Bool = true) {
-        print("menu close")
         scrollView.setContentOffset(CGPoint(x: sidebarWidth, y:0), animated: animated)
-        print("offset now \(scrollView.contentOffset.x)")
     }
     
     func closeMenuOnNotification () {
         closeMenu()
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }
 
 extension ContainerViewController : UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollView.isPagingEnabled = true
     }
-        
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollView.isPagingEnabled = false
     }

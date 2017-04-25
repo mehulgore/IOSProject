@@ -1,17 +1,17 @@
  //
-//  Main.swift
-//  IOSProject
-//
-//  Created by Mehul Gore on 3/9/17.
-//  Copyright © 2017 Mehul Gore. All rights reserved.
-//
-
-import UIKit
-import Firebase
-import FirebaseAuth
-import FirebaseDatabase
-
-class InputSchedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+ //  Main.swift
+ //  IOSProject
+ //
+ //  Created by Mehul Gore on 3/9/17.
+ //  Copyright © 2017 Mehul Gore. All rights reserved.
+ //
+ 
+ import UIKit
+ import Firebase
+ import FirebaseAuth
+ import FirebaseDatabase
+ 
+ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // properties
     @IBOutlet weak var scheduleTableView: UITableView!
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -27,23 +27,16 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         let maxDate = Calendar.current.date(byAdding: .day, value: Main.numDays, to: today)
         datePicker.minimumDate = today
         datePicker.maximumDate = maxDate
-        print (datePicker.minimumDate!)
-        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "close"), object: nil)
         datePicker.addTarget(self, action: #selector(InputSchedViewController.dateChanged), for: UIControlEvents.valueChanged)
         
-        guard let currentUser = FIRAuth.auth()?.currentUser else {
-            print ("NO USER SIGNED IN")
-            return
-        }
-        
         self.reload()
-                // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        Main.user?.getSched(date: Main.today, completion: { () in
-            Main.user?.populateWithDoNotDisturb(completion: { () in
+        Main.user?.populateWithDoNotDisturb(completion: { () in
+            Main.user?.getSched(date: Main.today, completion: { () in
                 self.scheduleTableView.reloadData()
             })
         })
@@ -79,7 +72,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = scheduleTableView.cellForRow(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor.green
+        cell?.contentView.backgroundColor = UIColor(red: 178/255.0, green: 1.0, blue: 102/255.0, alpha: 1.0)
         Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
     }
     
@@ -88,9 +81,7 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func dateChanged () {
-        print ("date changed to \(datePicker.date)")
         Main.user?.getSched(date: datePicker.date, completion: { () in
-            print (Main.schedToDisplay)
             self.reload()
         })
     }
@@ -108,7 +99,6 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(Main.schedToDisplay)
         return Main.schedToDisplay.count
     }
     
@@ -129,13 +119,13 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor.green
+            cell.contentView.backgroundColor = UIColor(red: 178/255.0, green: 1.0, blue: 102/255.0, alpha: 1.0)
             break
         case 2:
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor.cyan
+            cell.contentView.backgroundColor = UIColor(red: 0.0, green: 128/255.0, blue: 1.0, alpha: 1.0)
             break
         default:
             break
@@ -151,32 +141,32 @@ class InputSchedViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-//    func timeFromIndex (index: Int) -> String {
-//        var hourOffset = ""
-//        var numBeforeColon = index / 2
-//        let numAfterColon = index % 2
-//        var when = "AM"
-//        if (numBeforeColon == 12) {
-//            when = "PM"
-//        }
-//        if (numBeforeColon == 0) {
-//            numBeforeColon += 12
-//        }
-//        if (numBeforeColon > 12) {
-//            numBeforeColon -= 12
-//            when = "PM"
-//        }
-//        if (numAfterColon == 0) {
-//            hourOffset = ":00"
-//        }
-//        else {
-//            hourOffset = ":30"
-//        }
-//        return "\(numBeforeColon)\(hourOffset) \(when)"
-//        
-//    }
+    //    func timeFromIndex (index: Int) -> String {
+    //        var hourOffset = ""
+    //        var numBeforeColon = index / 2
+    //        let numAfterColon = index % 2
+    //        var when = "AM"
+    //        if (numBeforeColon == 12) {
+    //            when = "PM"
+    //        }
+    //        if (numBeforeColon == 0) {
+    //            numBeforeColon += 12
+    //        }
+    //        if (numBeforeColon > 12) {
+    //            numBeforeColon -= 12
+    //            when = "PM"
+    //        }
+    //        if (numAfterColon == 0) {
+    //            hourOffset = ":00"
+    //        }
+    //        else {
+    //            hourOffset = ":30"
+    //        }
+    //        return "\(numBeforeColon)\(hourOffset) \(when)"
+    //
+    //    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-}
+ }

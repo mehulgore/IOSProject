@@ -19,7 +19,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var eventTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         eventTableView.delegate = self
         eventTableView.dataSource = self
         // Do any additional setup after loading the view.
@@ -31,7 +31,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             // Get user value
             guard Snapshot.exists() else {
                 self.events = [""]
-                return 
+                return
             }
             
             let dict = Snapshot.value as! NSDictionary
@@ -41,7 +41,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             print(error.localizedDescription)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -58,18 +58,6 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         Main.user?.findAvailableTimes(event: self.eventName, completion: { () in
             self.performSegue(withIdentifier: "eventDetail", sender: self)
         })
-//        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events").child((cell?.textLabel?.text)!)
-//        ref.observeSingleEvent(of: .value, with: { (Snapshot) in
-//            // Get user value
-//            guard Snapshot.exists() else {
-//                print ("!!!!!!!!event doesnt exist")
-//                return
-//            }
-//            
-//            let dict = Snapshot.value as? NSDictionary
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,10 +73,10 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
@@ -99,5 +87,5 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-
+    
 }

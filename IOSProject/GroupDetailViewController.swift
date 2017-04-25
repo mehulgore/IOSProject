@@ -19,7 +19,7 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         groupNameLabel.text = groupName
         
         groupMembersTableView.delegate = self
@@ -31,16 +31,14 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
             let groupDict = Snapshot.value as! NSDictionary
             self.members = groupDict.allKeys as! [String]
             self.groupMembersTableView.reloadData()
-            print (self.members)
         }) { (error) in
             print(error.localizedDescription)
         }
-
+        
         // Do any additional setup after loading the view.
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
-        print (members[indexPath.row])
         cell.textLabel?.text = members[indexPath.row]
         return cell
     }
@@ -52,7 +50,7 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -60,13 +58,13 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

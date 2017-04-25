@@ -33,7 +33,6 @@ class User {
     
     func fill () {
         var temp = Main.today
-        print ("in fill the time is \(temp)")
         while temp.compare(Main.maxDate!) != .orderedDescending {
             self.getSchedIfNull(date: temp)
             temp = Calendar.current.date(byAdding: .day, value: 1, to: temp)!
@@ -43,7 +42,6 @@ class User {
     func firstTimeSetup (completion: @escaping () -> ()) {
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
         var temp = Main.today
-        print ("in first time setup today is \(temp)")
         while temp.compare(Main.maxDate!) != .orderedDescending {
             allSchedsRef.updateChildValues([Main.dateToString(date: temp): Main.emptyArray])
             temp = Calendar.current.date(byAdding: .day, value: 1, to: temp)!
@@ -90,20 +88,13 @@ class User {
         let allSchedsRef = self.ref.child("users").child(self.uid).child("schedules")
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
-            print(dateString)
             let scheds = snapshot.value as! NSDictionary
-            //print(scheds)
             if (scheds[dateString] != nil) {
-                print("getsched: schedule for \(dateString) is in the database")
-                //print(scheds[dateString] ?? "array")
-                //self.currentSched = (scheds[dateString] as? [Int])!
                 Main.schedToDisplay = (scheds[dateString] as? [Int])!
                 completion()
             }
             else {
                 allSchedsRef.child(dateString).setValue(Main.emptyArray)
-                print("getsched: schedule for \(dateString) is NOT THERE")
-                //print(scheds[dateString] ?? "array is nil")
                 Main.schedToDisplay = Main.emptyArray
                 completion()
             }
@@ -115,7 +106,6 @@ class User {
     func clearPast () {
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
         let today = Main.today
-        print ("in clear past function todays date is \(today)")
         allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             if let scheds = snapshot.value as? NSDictionary {
@@ -131,10 +121,7 @@ class User {
                     let date1 = calendar.startOfDay(for: date!)
                     let date2 = calendar.startOfDay(for: today)
                     let components = calendar.dateComponents([.day], from: date1, to: date2)
-                    print (components.day ?? "fudge")
                     if (components.day! >= 1) {
-                        print ("today: \(today)")
-                        print ("date : \(date)")
                         allSchedsRef.child(dateString).removeValue()
                     }
                 }
@@ -187,7 +174,6 @@ class User {
                 for (key, value) in scheds {
                     let sched = value as! [Int]
                     let dateString = key as! String
-                    print (key)
                     self.addDoNotDisturb (dateString: dateString, startTime: self.doNotDisturbStart, stopTime: self.doNotDisturbStop, array: sched)
                 }
                 completion()
@@ -202,7 +188,6 @@ class User {
     func setDoNotDisturbTime (type: String, time: String) {
         //if ref.child("users").child(self.uid).va) == nil {
         ref.child("users").child(self.uid).child("doNotDisturb").child(type).setValue(time)
-        print ("set a time to \(time)")
         self.populateWithDoNotDisturb(completion: {() in })
     }
     
@@ -230,7 +215,6 @@ class User {
         var masterDict = fillMasterDict()
         self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
             let users = snapshot.value as? NSDictionary
-            //print (users)
             
             let uidNode = users?[self.uid] as! [String: Any]
             let eventsNode = uidNode["events"] as! [String: Any]
@@ -239,12 +223,9 @@ class User {
             let duration = eventNode["duration"] as! Int
             let groupsNode = uidNode["groups"] as! [String: Any]
             let groupNode = groupsNode[groupName] as! [String: String]
-            //let uidArray = groupNode.values as! [String]
             
             for (_, userID) in groupNode {
-                //print (groupNode)
                 let thisUid = users?[userID] as! [String: Any]
-                //print (thisUid)
                 let schedules = thisUid["schedules"] as! [String: [Int]]
                 for (date, sched) in schedules {
                     if (masterDict?[date] != nil) {
@@ -254,12 +235,8 @@ class User {
                 
             }
             
-        print (masterDict ?? "master dict not found")
         self.lookThroughMasterDict(dict: masterDict!, duration: duration, eventName: event)
         completion()
-            //print (uidArray)
-            //let groupName = users?[self.uid]["events"][event]["group"]
-            //let group = users?[self.uid]["groups"]
         })
         
         
@@ -321,7 +298,6 @@ class User {
                             var inner = result[date]
                             inner?[Main.timeStrings[startIndex]] = Main.timeStrings[endIndex]
                             result[date] = inner
-                            print (result)
                         }
                     }
                     count = 0
@@ -329,7 +305,6 @@ class User {
                 
             }
         }
-        print (result)
         self.ref.child("users").child(self.uid).child("events").child(eventName).child("availableTimes").setValue(result)
     }
     
