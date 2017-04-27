@@ -23,6 +23,7 @@
 		296A24C71E760BE1004943B0 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A24C61E760BE1004943B0 /* CreateGroupViewController.swift */; };
 		296A25091E7881DC004943B0 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A25081E7881DC004943B0 /* ContainerViewController.swift */; };
 		296A250B1E78ADD3004943B0 /* SidebarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */; };
+		297177B01EB175D300FB5441 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297177AF1EB175D300FB5441 /* Config.swift */; };
 		29850BA61E971A2700E1B4F0 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850BA51E971A2700E1B4F0 /* Main.swift */; };
 		2998950B1E7B4BBF00CA4679 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998950A1E7B4BBF00CA4679 /* User.swift */; };
 		2998950F1E7F323100CA4679 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2998950E1E7F323100CA4679 /* SettingsViewController.swift */; };
@@ -73,6 +74,7 @@
 		296A24C61E760BE1004943B0 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		296A25081E7881DC004943B0 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarTableViewController.swift; sourceTree = "<group>"; };
+		297177AF1EB175D300FB5441 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		29850BA51E971A2700E1B4F0 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		2998950A1E7B4BBF00CA4679 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2998950E1E7F323100CA4679 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				2998950A1E7B4BBF00CA4679 /* User.swift */,
 				29850BA51E971A2700E1B4F0 /* Main.swift */,
+				297177AF1EB175D300FB5441 /* Config.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				296A24BD1E723C43004943B0 /* LoginViewController.swift in Sources */,
 				296A248E1E723475004943B0 /* IOSProject.xcdatamodeld in Sources */,
 				296A24C71E760BE1004943B0 /* CreateGroupViewController.swift in Sources */,
+				297177B01EB175D300FB5441 /* Config.swift in Sources */,
 				29850BA61E971A2700E1B4F0 /* Main.swift in Sources */,
 				296A24861E723475004943B0 /* AppDelegate.swift in Sources */,
 				296A24BB1E723C2D004943B0 /* RegisterViewController.swift in Sources */,

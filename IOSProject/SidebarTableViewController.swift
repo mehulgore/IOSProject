@@ -14,11 +14,16 @@ class SidebarTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        (UIApplication.shared.delegate as! AppDelegate).sidebar = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,36 +58,45 @@ class SidebarTableViewController: UITableViewController {
         }
     }
     
-    func switchToInputTab () {
-        
-    }
-    
-    func switchToSettingsTab () {
-        
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath.row == 0) {
+            return 100.0
+        }
+        return 50.0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        self.tableView.backgroundColor = Main.backgroundColor
         var cell = UITableViewCell()
-        
         switch indexPath.row {
         case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: "title", for: indexPath)
+            cell.backgroundColor = Main.doNotDisturbCellColor
             break
         case 1:
             cell = tableView.dequeueReusableCell(withIdentifier: "inputSchedule", for: indexPath)
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.doNotDisturbCellColor
             break
         case 2:
             cell = tableView.dequeueReusableCell(withIdentifier: "groups", for: indexPath)
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.doNotDisturbCellColor
             break
         case 3:
             cell = tableView.dequeueReusableCell(withIdentifier: "events", for: indexPath)
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.doNotDisturbCellColor
             break
         case 4:
             cell = tableView.dequeueReusableCell(withIdentifier: "settings", for: indexPath)
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.doNotDisturbCellColor
             break
         case 5:
             cell = tableView.dequeueReusableCell(withIdentifier: "signOut", for: indexPath)
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.doNotDisturbCellColor
             break
         default:
             break

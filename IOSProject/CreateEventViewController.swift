@@ -24,6 +24,7 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     var didSelect = 0
     
+    @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var groupTableView: UITableView!
     
     override func viewDidLoad() {
@@ -36,6 +37,14 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
+        self.groupTableView.backgroundColor = Main.backgroundColor
+        createButton.backgroundColor = Main.doNotDisturbCellColor
+        stepper.tintColor = Main.doNotDisturbCellColor
+        
         didSelect = 0
         let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups")
         ref.observeSingleEvent(of: .value, with: { (Snapshot) in
@@ -67,6 +76,8 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "group", for: indexPath)
         cell.textLabel?.text = groups[indexPath.row]
+        cell.textLabel?.textColor = Main.textColor
+        cell.backgroundColor = Main.backgroundColor
         return cell
     }
     

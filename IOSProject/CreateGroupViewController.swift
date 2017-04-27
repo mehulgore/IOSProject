@@ -19,6 +19,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var groupNameTextField: UITextField!
     
+    @IBOutlet weak var createButton: UIButton!
     let searchController = UISearchController(searchResultsController: nil)
     var userArray = [String]()
     var filteredUsers = [String]()
@@ -98,14 +99,20 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             let cell = tableView.dequeueReusableCell(withIdentifier: "groupcell", for: indexPath)
             let groupNames = Array(groupUsers.keys)
             cell.textLabel?.text = groupNames[indexPath.row]
+            cell.textLabel?.textColor = Main.textColor
+            cell.backgroundColor = Main.backgroundColor
             return cell
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "friendcell", for: indexPath)
             if(isSearching){
                 cell.textLabel?.text = self.filteredUsers[indexPath.row]
+                cell.textLabel?.textColor = Main.textColor
+                cell.backgroundColor = Main.backgroundColor
             } else {
                 cell.textLabel?.text = self.userArray[indexPath.row]
+                cell.textLabel?.textColor = Main.textColor
+                cell.backgroundColor = Main.backgroundColor
             }
             return cell
         }
@@ -184,6 +191,16 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     //
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
+        self.friendsTableView.backgroundColor = Main.backgroundColor
+        self.groupTableView.backgroundColor = Main.backgroundColor
+        createButton.backgroundColor = Main.doNotDisturbCellColor
     }
     
     

@@ -30,6 +30,10 @@
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "close"), object: nil)
         datePicker.addTarget(self, action: #selector(InputSchedViewController.dateChanged), for: UIControlEvents.valueChanged)
         
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
         self.reload()
         // Do any additional setup after loading the view.
     }
@@ -37,15 +41,17 @@
     override func viewWillAppear(_ animated: Bool) {
         Main.user?.populateWithDoNotDisturb(completion: { () in
             Main.user?.getSched(date: Main.today, completion: { () in
+                UINavigationBar.appearance().tintColor = Main.textColor
+                UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+                UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+                self.view.backgroundColor = Main.backgroundColor
+                self.datePicker.setValue(Main.textColor, forKeyPath: "textColor")
+                self.datePicker.setValue(false, forKey: "highlightsToday")
                 self.scheduleTableView.reloadData()
             })
         })
     }
     
-    // need to reload everytime tab view is switched
-    //override func viewDidAppear(_ animated: Bool) {
-    //    self.reload()
-    //}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -72,7 +78,7 @@
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = scheduleTableView.cellForRow(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor(red: 178/255.0, green: 1.0, blue: 102/255.0, alpha: 1.0)
+        cell?.contentView.backgroundColor = Main.selectedCellColor
         Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
     }
     
@@ -112,6 +118,8 @@
         cell.textLabel?.text = Main.timeStrings[indexPath.row]
         switch Main.schedToDisplay[indexPath.row] {
         case 0:
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.textColor
             cell.isSelected = false
             cell.setSelected(false, animated: false)
             break
@@ -119,13 +127,15 @@
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor(red: 178/255.0, green: 1.0, blue: 102/255.0, alpha: 1.0)
+            cell.contentView.backgroundColor = Main.selectedCellColor
+            cell.textLabel?.textColor = Main.textColor
             break
         case 2:
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-            cell.contentView.backgroundColor = UIColor(red: 0.0, green: 128/255.0, blue: 1.0, alpha: 1.0)
+            cell.contentView.backgroundColor = Main.doNotDisturbCellColor
+            cell.textLabel?.textColor = Main.textColor
             break
         default:
             break
@@ -141,30 +151,6 @@
         }
     }
     
-    //    func timeFromIndex (index: Int) -> String {
-    //        var hourOffset = ""
-    //        var numBeforeColon = index / 2
-    //        let numAfterColon = index % 2
-    //        var when = "AM"
-    //        if (numBeforeColon == 12) {
-    //            when = "PM"
-    //        }
-    //        if (numBeforeColon == 0) {
-    //            numBeforeColon += 12
-    //        }
-    //        if (numBeforeColon > 12) {
-    //            numBeforeColon -= 12
-    //            when = "PM"
-    //        }
-    //        if (numAfterColon == 0) {
-    //            hourOffset = ":00"
-    //        }
-    //        else {
-    //            hourOffset = ":30"
-    //        }
-    //        return "\(numBeforeColon)\(hourOffset) \(when)"
-    //
-    //    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

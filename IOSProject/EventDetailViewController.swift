@@ -28,6 +28,11 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
+        self.availableTimesTableView.backgroundColor = Main.backgroundColor
         eventNameLabel.text = eventName
         FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events").child(eventName).child("availableTimes").observeSingleEvent(of: .value, with: { (snapshot) in
             guard snapshot.exists() else {

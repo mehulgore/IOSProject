@@ -13,6 +13,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.isHidden = true
+        (UIApplication.shared.delegate as! AppDelegate).tabBarController = self
         //self.selectedIndex = 2
         // Do any additional setup after loading the view.
     }
@@ -21,6 +22,5 @@ class TabBarController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
 }

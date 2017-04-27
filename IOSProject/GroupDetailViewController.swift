@@ -56,7 +56,13 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
+        self.groupMembersTableView.backgroundColor = Main.backgroundColor
+    }
     /*
      // MARK: - Navigation
      

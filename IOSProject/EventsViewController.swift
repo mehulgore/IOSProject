@@ -26,6 +26,11 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
+        self.eventTableView.backgroundColor = Main.backgroundColor
         let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events")
         ref.observeSingleEvent(of: .value, with: { (Snapshot) in
             // Get user value
@@ -63,6 +68,8 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "event", for: indexPath)
         cell.textLabel?.text = events[indexPath.row]
+        cell.textLabel?.textColor = Main.textColor
+        cell.backgroundColor = Main.backgroundColor
         return cell
     }
     
@@ -74,6 +81,9 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         return 1
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
     
     // MARK: - Navigation
     

@@ -29,6 +29,11 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.groupTableView.backgroundColor = Main.backgroundColor
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.view.backgroundColor = Main.backgroundColor
         let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups")
         ref.observeSingleEvent(of: .value, with: { (Snapshot) in
             // Get user value
@@ -55,6 +60,8 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
         cell.textLabel?.text = groups[indexPath.row]
+        cell.backgroundColor = Main.backgroundColor
+        cell.textLabel?.textColor = Main.textColor
         return cell
     }
     

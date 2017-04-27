@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Main {
     internal static var user: User? = nil
@@ -38,12 +39,24 @@ class Main {
     internal static var today = rawDate.getLocalTime()
     internal static var maxDate = Calendar.current.date(byAdding: .day, value: Main.numDays, to: today)
     
+    internal static var selectedCellColor = UIColor(red: 178/255.0, green: 1.0, blue: 102/255.0, alpha: 1.0)
+    internal static var doNotDisturbCellColor = UIColor(red: 0.0, green: 122/255.0, blue: 1.0, alpha: 1.0)
+    internal static var backgroundColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
+    internal static var textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+    
     internal static func dateToString (date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
         dateFormatter.dateStyle = .medium
         return dateFormatter.string(from: date)
     }
+    
+    internal static func reloadNavBar () {
+        UINavigationBar.appearance().tintColor = Main.textColor
+        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+    }
+    
 }
 
 // adds these methods to the NSDate class

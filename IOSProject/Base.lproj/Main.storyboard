@@ -133,7 +133,7 @@
         <!--Groups-->
         <scene sceneID="QrG-Dw-ykP">
             <objects>
-                <viewController id="9SU-fj-9t1" customClass="ShowGroupsViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9SU-fj-9t1" customClass="ShowGroupsViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KV4-xm-Sdr"/>
                         <viewControllerLayoutGuide type="bottom" id="oJG-Qf-d4M"/>
@@ -166,13 +166,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Groups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogE-sb-e75">
-                                <rect key="frame" x="16" y="96" width="343" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -201,7 +194,7 @@
         <!--Create Group View Controller-->
         <scene sceneID="1SC-ZI-jhW">
             <objects>
-                <viewController id="Vy1-SE-AQ7" customClass="CreateGroupViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Vy1-SE-AQ7" customClass="CreateGroupViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HOo-2c-Mod"/>
                         <viewControllerLayoutGuide type="bottom" id="8bv-it-JLY"/>
@@ -269,9 +262,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olV-UL-02t">
-                                <rect key="frame" x="164" y="568" width="46" height="30"/>
+                                <rect key="frame" x="16" y="568" width="343" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Create"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Create">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="createClicked:" destination="Vy1-SE-AQ7" eventType="touchUpInside" id="p14-DS-iZZ"/>
                                     <segue destination="9SU-fj-9t1" kind="show" id="rEs-ja-ayG"/>
@@ -282,6 +278,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="zAM-0v-IYI"/>
                     <connections>
+                        <outlet property="createButton" destination="olV-UL-02t" id="ULQ-wz-rCR"/>
                         <outlet property="friendsTableView" destination="j9A-ur-eaw" id="r5D-hW-cqh"/>
                         <outlet property="groupNameTextField" destination="8VU-nL-w15" id="hBx-ai-f8A"/>
                         <outlet property="groupTableView" destination="nld-UV-6HO" id="cMK-8E-lbd"/>
@@ -307,12 +304,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5007" y="2123"/>
+            <point key="canvasLocation" x="5005.6000000000004" y="2122.4887556221893"/>
         </scene>
         <!--Event Detail View Controller-->
         <scene sceneID="v8q-DE-OXt">
             <objects>
-                <viewController id="LjN-7H-urv" customClass="EventDetailViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="LjN-7H-urv" customClass="EventDetailViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qtq-Z7-ff5"/>
                         <viewControllerLayoutGuide type="bottom" id="wye-Vd-PcY"/>
@@ -375,7 +372,7 @@
         <!--Group Detail View Controller-->
         <scene sceneID="H50-1j-J33">
             <objects>
-                <viewController id="WgX-gq-NBE" customClass="GroupDetailViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="WgX-gq-NBE" customClass="GroupDetailViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LRG-FY-Ozx"/>
                         <viewControllerLayoutGuide type="bottom" id="hlo-8X-Frf"/>
@@ -422,7 +419,7 @@
         <!--Schedule-->
         <scene sceneID="gYH-27-nEc">
             <objects>
-                <viewController id="y7g-d7-2KJ" customClass="InputSchedViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="y7g-d7-2KJ" customClass="InputSchedViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YkM-iO-8Bb"/>
                         <viewControllerLayoutGuide type="bottom" id="q5F-Rk-pZV"/>
@@ -432,7 +429,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uXe-2u-lhM">
-                                <rect key="frame" x="16" y="193" width="343" height="454"/>
+                                <rect key="frame" x="16" y="250" width="343" height="454"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -466,6 +463,13 @@
                                     <!--2017-03-10 02:30:18 +0000-->
                                 </date>
                             </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap the times you are busy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ltb-5C-Sz9">
+                                <rect key="frame" x="84" y="204" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -590,35 +594,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="635" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fzU-fN-und">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fzU-fN-und">
                                 <rect key="frame" x="0.0" y="0.0" width="635" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H8W-iQ-mvS">
+                                    <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="Left" translatesAutoresizingMaskIntoConstraints="NO" id="H8W-iQ-mvS" userLabel="Right">
                                         <rect key="frame" x="255" y="-7" width="380" height="674"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" red="1" green="0.89152419559999996" blue="0.07487853555" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="e9h-4P-hhm" kind="embed" id="D85-jg-zVT"/>
                                         </connections>
                                     </containerView>
-                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KV4-uf-7lB">
+                                    <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KV4-uf-7lB" userLabel="Left">
                                         <rect key="frame" x="0.0" y="0.0" width="258" height="667"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" red="1" green="0.56485315049999996" blue="0.1897893645" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="260" id="3Hg-cD-6GY"/>
+                                        </constraints>
                                         <connections>
                                             <segue destination="hQc-qB-BEQ" kind="embed" id="snU-go-d6H"/>
                                         </connections>
                                     </containerView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="KV4-uf-7lB" firstAttribute="top" secondItem="fzU-fN-und" secondAttribute="top" id="Pa1-6Q-wgP"/>
+                                    <constraint firstAttribute="bottom" secondItem="H8W-iQ-mvS" secondAttribute="bottom" id="PuI-aj-LJa"/>
+                                    <constraint firstAttribute="trailing" secondItem="H8W-iQ-mvS" secondAttribute="trailing" id="YWb-Uy-TO9"/>
+                                    <constraint firstAttribute="trailing" secondItem="KV4-uf-7lB" secondAttribute="trailing" constant="377" id="afk-ro-8Ng"/>
+                                    <constraint firstItem="H8W-iQ-mvS" firstAttribute="top" secondItem="fzU-fN-und" secondAttribute="top" id="maD-Y3-O38"/>
+                                    <constraint firstItem="KV4-uf-7lB" firstAttribute="leading" secondItem="fzU-fN-und" secondAttribute="leading" id="uwE-Yd-8Ty"/>
+                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H8W-iQ-mvS" firstAttribute="width" secondItem="l7i-nC-3M6" secondAttribute="width" id="16f-SZ-joo"/>
+                            <constraint firstItem="H3C-aL-PxY" firstAttribute="top" secondItem="fzU-fN-und" secondAttribute="bottom" id="3tr-YQ-6uW"/>
+                            <constraint firstItem="H8W-iQ-mvS" firstAttribute="height" secondItem="l7i-nC-3M6" secondAttribute="height" id="6T1-gv-CgG"/>
+                            <constraint firstAttribute="trailing" secondItem="fzU-fN-und" secondAttribute="trailing" id="Vpi-O1-62C"/>
+                            <constraint firstItem="fzU-fN-und" firstAttribute="top" secondItem="l7i-nC-3M6" secondAttribute="top" id="bql-bf-45j"/>
+                            <constraint firstItem="fzU-fN-und" firstAttribute="leading" secondItem="l7i-nC-3M6" secondAttribute="leading" id="gpO-h2-5ZN"/>
+                            <constraint firstItem="KV4-uf-7lB" firstAttribute="height" secondItem="l7i-nC-3M6" secondAttribute="height" id="ltC-ry-qkh"/>
+                        </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="635" height="667"/>
                     <connections>
                         <outlet property="scrollView" destination="fzU-fN-und" id="R5O-N5-Mj6"/>
+                        <outlet property="sidebarDistanceFromRightEdge" destination="afk-ro-8Ng" id="IHN-Qb-ymx"/>
+                        <outlet property="sidebarView" destination="KV4-uf-7lB" id="gFd-EC-oTq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eiu-JT-g2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -797,14 +820,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLA-zp-D1T">
-                                <rect key="frame" x="16" y="169" width="80" height="21"/>
+                                <rect key="frame" x="16" y="123" width="80" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="End time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04m-IX-13e">
-                                <rect key="frame" x="16" y="320" width="72" height="21"/>
+                                <rect key="frame" x="16" y="279" width="72" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -817,20 +840,38 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="MdH-IX-QNJ">
-                                <rect key="frame" x="0.0" y="349" width="375" height="117"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <date key="date" timeIntervalSinceReferenceDate="511652123.873137">
-                                    <!--2017-03-19 21:35:23 +0000-->
-                                </date>
-                            </datePicker>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="zEu-g8-laa">
-                                <rect key="frame" x="0.0" y="193" width="375" height="119"/>
+                                <rect key="frame" x="0.0" y="152" width="375" height="119"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <date key="date" timeIntervalSinceReferenceDate="511652067.64194298">
                                     <!--2017-03-19 21:34:27 +0000-->
                                 </date>
                             </datePicker>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="MdH-IX-QNJ">
+                                <rect key="frame" x="0.0" y="308" width="375" height="117"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="511652123.873137">
+                                    <!--2017-03-19 21:35:23 +0000-->
+                                </date>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWf-Zq-mqm">
+                                <rect key="frame" x="160" y="433" width="54" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="InW-ur-X67">
+                                <rect key="frame" x="16" y="462" width="343" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Default"/>
+                                    <segment title="Night"/>
+                                </segments>
+                                <connections>
+                                    <action selector="themePickerChanged:" destination="5NH-I4-Q3T" eventType="valueChanged" id="5kz-IG-1bW"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -844,6 +885,7 @@
                     <connections>
                         <outlet property="startTimePicker" destination="zEu-g8-laa" id="2b0-dU-hRt"/>
                         <outlet property="stopTimePicker" destination="MdH-IX-QNJ" id="GFw-LA-fC1"/>
+                        <outlet property="themePicker" destination="InW-ur-X67" id="3Hx-Wd-qe1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QxR-yk-2wD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -856,7 +898,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SaH-JO-Ztk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Schedule" id="90X-ap-r5k"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="B9h-nq-5J4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="B9h-nq-5J4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -872,7 +914,7 @@
         <!--Events-->
         <scene sceneID="Q8q-Jb-58X">
             <objects>
-                <viewController id="EME-wP-nEe" customClass="EventsViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="EME-wP-nEe" customClass="EventsViewController" customModule="IOSProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dgR-ZD-LPs"/>
                         <viewControllerLayoutGuide type="bottom" id="rZZ-fI-iTi"/>
@@ -882,19 +924,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="35" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K48-Ed-vnf">
-                                <rect key="frame" x="16" y="160" width="343" height="487"/>
+                                <rect key="frame" x="16" y="71" width="343" height="487"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="event" textLabel="JYw-re-vZW" style="IBUITableViewCellStyleDefault" id="GRd-f6-RPT">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="event" textLabel="JYw-re-vZW" style="IBUITableViewCellStyleDefault" id="GRd-f6-RPT">
                                         <rect key="frame" x="0.0" y="28" width="343" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GRd-f6-RPT" id="cpu-Zm-N82">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="34"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="310" height="34"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JYw-re-vZW">
-                                                    <rect key="frame" x="15" y="0.0" width="313" height="34"/>
+                                                    <rect key="frame" x="15" y="0.0" width="293" height="34"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -905,13 +947,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m59-pw-f8h">
-                                <rect key="frame" x="16" y="85" width="343" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1015,9 +1050,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2N-9e-t5R">
-                                <rect key="frame" x="164" y="567" width="46" height="30"/>
+                                <rect key="frame" x="16" y="567" width="343" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Create"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Create">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="createClicked:" destination="KKg-WO-E0Q" eventType="touchUpInside" id="9L3-bY-zp9"/>
                                     <segue destination="EME-wP-nEe" kind="show" id="EgA-pC-gLq"/>
@@ -1028,6 +1066,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="XcG-y5-U39"/>
                     <connections>
+                        <outlet property="createButton" destination="c2N-9e-t5R" id="24O-oH-QAW"/>
                         <outlet property="durationLabel" destination="7X7-yd-Lgj" id="X6m-sx-ihd"/>
                         <outlet property="eventNameTextField" destination="Hhz-oL-q25" id="j46-ga-Cv9"/>
                         <outlet property="groupTableView" destination="boC-AE-6Pd" id="nGg-K7-iFV"/>
@@ -1044,7 +1083,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xi0-z0-88Y" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Groups" id="rQh-n7-2MH"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="GTj-fQ-pEa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GTj-fQ-pEa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1063,7 +1102,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WeU-nh-Sql" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" id="9B8-IO-jGk"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FIs-wa-uhx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FIs-wa-uhx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1082,7 +1121,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DSW-u7-7lx" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Events" id="P0o-Br-QGi"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Hc3-Ux-Up0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hc3-Ux-Up0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1097,9 +1136,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="EgA-pC-gLq"/>
-        <segue reference="53g-Au-fWE"/>
+        <segue reference="kem-m9-Jxp"/>
         <segue reference="5UN-tM-REJ"/>
         <segue reference="rEs-ja-ayG"/>
+        <segue reference="EgA-pC-gLq"/>
     </inferredMetricsTieBreakers>
 </document>

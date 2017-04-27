@@ -13,7 +13,17 @@ class ContainerViewController: UIViewController {
     
     let sidebarWidth:CGFloat = 260
     
+    @IBOutlet weak var sidebarView: UIView!
+    // TODO 377 iphone 7, 416 iphone 7 plus
+    @IBOutlet weak var sidebarDistanceFromRightEdge: NSLayoutConstraint!
+    
     override func viewDidLoad() {
+        
+        if (UIDevice.current.modelName == "iPhone 7 Plus") {
+            sidebarDistanceFromRightEdge.constant = 416
+            self.view.layoutIfNeeded()
+        }
+        
         DispatchQueue.main.async {
             self.closeMenu(animated: false)
         }
@@ -41,6 +51,7 @@ class ContainerViewController: UIViewController {
     }
     
     private func openMenu () {
+        (UIApplication.shared.delegate as! AppDelegate).sidebar?.tableView.reloadData()
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
