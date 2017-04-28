@@ -34,6 +34,7 @@ class ShowGroupsViewController: UIViewController, UITableViewDelegate, UITableVi
         UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
         self.view.backgroundColor = Main.backgroundColor
+        self.groupTableView.layer.cornerRadius = 15
         let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups")
         ref.observeSingleEvent(of: .value, with: { (Snapshot) in
             // Get user value

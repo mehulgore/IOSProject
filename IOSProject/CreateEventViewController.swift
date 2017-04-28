@@ -43,6 +43,7 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.backgroundColor = Main.backgroundColor
         self.groupTableView.backgroundColor = Main.backgroundColor
         createButton.backgroundColor = Main.doNotDisturbCellColor
+        createButton.layer.cornerRadius = 15
         stepper.tintColor = Main.doNotDisturbCellColor
         
         didSelect = 0

@@ -101,6 +101,7 @@ class SettingsViewController: UIViewController {
             Main.backgroundColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
             self.view.setNeedsDisplay()
+            self.viewDidLoad()
             Main.reloadNavBar()
         case 1:
             Main.selectedCellColor = UIColor(red: 244/255, green: 66/255, blue: 209/255, alpha: 1.0)
@@ -108,6 +109,7 @@ class SettingsViewController: UIViewController {
             Main.backgroundColor = UIColor(red: 60/255.0, green: 60/255.0, blue: 60/255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
             self.view.setNeedsDisplay()
+            self.viewDidLoad()
             Main.reloadNavBar()
         default:
             break
