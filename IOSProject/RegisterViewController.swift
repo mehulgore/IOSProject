@@ -30,11 +30,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         confirmPasswordTextField.delegate = self
         
-        addBorder(field: firstNameTextField)
-        addBorder(field: lastNameTextField)
-        addBorder(field: emailTextField)
-        addBorder(field: passwordTextField)
-        addBorder(field: confirmPasswordTextField)
+        Main.addBorder(field: firstNameTextField)
+        Main.addBorder(field: lastNameTextField)
+        Main.addBorder(field: emailTextField)
+        Main.addBorder(field: passwordTextField)
+        Main.addBorder(field: confirmPasswordTextField)
         
         registerButton.layer.cornerRadius = 15
         
@@ -115,17 +115,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         else {
             return true
         }
-    }
-    
-    func addBorder(field : UITextField){
-        let border = CALayer()
-        let width = CGFloat(2.0)
-        border.borderColor = UIColor.darkGray.cgColor
-        border.frame = CGRect(x: 0, y: field.frame.size.height - width, width:  field.frame.size.width, height: field.frame.size.height)
-        
-        border.borderWidth = width
-        field.layer.addSublayer(border)
-        field.layer.masksToBounds = true
     }
     
     @IBAction func userHasAccountBtn(_ sender: Any) {

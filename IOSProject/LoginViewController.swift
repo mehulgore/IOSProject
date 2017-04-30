@@ -29,13 +29,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.delegate = self
         passwordTextField.delegate = self
   
-        addBorder(field: emailTextField)
-        addBorder(field: passwordTextField)
+        Main.addBorder(field: emailTextField)
+        Main.addBorder(field: passwordTextField)
         
         loginButton.layer.cornerRadius = 15
-
-        // TODO(developer) Configure the sign-in button look/feel
-        // ...
     }
     
     override func didReceiveMemoryWarning() {
@@ -99,17 +96,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-    func addBorder(field : UITextField){
-        let border = CALayer()
-        let width = CGFloat(2.0)
-        border.borderColor = UIColor.darkGray.cgColor
-        border.frame = CGRect(x: 0, y: field.frame.size.height - width, width:  field.frame.size.width, height: field.frame.size.height)
-        
-        border.borderWidth = width
-        field.layer.addSublayer(border)
-        field.layer.masksToBounds = true
-    }
+
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if (identifier == "login") {

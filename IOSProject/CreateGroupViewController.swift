@@ -41,7 +41,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         self.friendsTableView.dataSource = self
         self.groupTableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendcell")
         
-        addBorder(field: groupNameTextField)
+        Main.addBorder(field: groupNameTextField)
         
         self.createButton.layer.cornerRadius = 15
         
@@ -96,17 +96,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func addBorder(field : UITextField){
-        let border = CALayer()
-        let width = CGFloat(2.0)
-        border.borderColor = UIColor.darkGray.cgColor
-        border.frame = CGRect(x: 0, y: field.frame.size.height - width, width:  field.frame.size.width, height: field.frame.size.height)
-        
-        border.borderWidth = width
-        field.layer.addSublayer(border)
-        field.layer.masksToBounds = true
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

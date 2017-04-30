@@ -39,6 +39,8 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
+        cell.backgroundColor = Main.backgroundColor
+        cell.textLabel?.textColor = Main.textColor
         cell.textLabel?.text = members[indexPath.row]
         return cell
     }
@@ -62,6 +64,7 @@ class GroupDetailViewController: UIViewController, UITableViewDelegate, UITableV
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
         self.view.backgroundColor = Main.backgroundColor
         self.groupMembersTableView.backgroundColor = Main.backgroundColor
+        self.groupNameLabel.textColor = Main.textColor
     }
     /*
      // MARK: - Navigation

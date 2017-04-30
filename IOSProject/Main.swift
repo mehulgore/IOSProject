@@ -57,6 +57,18 @@ class Main {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
     }
     
+    
+    internal static func addBorder(field : UITextField){
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.darkGray.cgColor
+        border.frame = CGRect(x: 0, y: field.frame.size.height - width, width:  field.frame.size.width, height: field.frame.size.height)
+        
+        border.borderWidth = width
+        field.layer.addSublayer(border)
+        field.layer.masksToBounds = true
+    }
+    
 }
 
 // adds these methods to the NSDate class

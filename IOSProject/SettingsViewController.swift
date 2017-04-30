@@ -100,17 +100,21 @@ class SettingsViewController: UIViewController {
             Main.doNotDisturbCellColor = UIColor(red: 0.0, green: 128/255.0, blue: 1.0, alpha: 1.0)
             Main.backgroundColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
-            self.view.setNeedsDisplay()
-            self.viewDidLoad()
-            Main.reloadNavBar()
+            self.viewWillAppear(false)
+            UINavigationBar.appearance().tintColor = Main.textColor
+            UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+            //Main.reloadNavBar()
         case 1:
-            Main.selectedCellColor = UIColor(red: 244/255, green: 66/255, blue: 209/255, alpha: 1.0)
-            Main.doNotDisturbCellColor = UIColor(red: 244/255, green: 182/255, blue: 66/255, alpha: 1)
+            Main.selectedCellColor = UIColor(red: 227/255, green: 90/255, blue: 15/255, alpha: 1.0)
+            Main.doNotDisturbCellColor = UIColor(red: 238/255, green: 175/255, blue: 24/255, alpha: 1)
             Main.backgroundColor = UIColor(red: 60/255.0, green: 60/255.0, blue: 60/255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
-            self.view.setNeedsDisplay()
-            self.viewDidLoad()
-            Main.reloadNavBar()
+            self.viewWillAppear(false)
+            UINavigationBar.appearance().tintColor = Main.textColor
+            UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+            //Main.reloadNavBar()
         default:
             break
         }

@@ -16,6 +16,7 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var availableTimesTableView: UITableView!
     
+    @IBOutlet weak var availableTimesLabel: UILabel!
     var eventName = ""
     var availableTimes: [String] = []
     
@@ -33,7 +34,12 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
         self.view.backgroundColor = Main.backgroundColor
         self.availableTimesTableView.backgroundColor = Main.backgroundColor
-        eventNameLabel.text = eventName
+        self.eventNameLabel.text = eventName
+        self.eventNameLabel.textColor = Main.textColor
+        
+        self.availableTimesTableView.backgroundColor = Main.backgroundColor
+        
+        self.availableTimesLabel.textColor = Main.textColor
         FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("events").child(eventName).child("availableTimes").observeSingleEvent(of: .value, with: { (snapshot) in
             guard snapshot.exists() else {
                 self.availableTimes = []
@@ -63,6 +69,8 @@ class EventDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "time", for: indexPath)
+        cell.backgroundColor = Main.backgroundColor
+        cell.textLabel?.textColor = Main.textColor
         cell.textLabel?.text = self.availableTimes[indexPath.row]
         return cell
     }
