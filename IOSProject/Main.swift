@@ -12,6 +12,7 @@ import UIKit
 class Main {
     internal static var user: User? = nil
     internal static var schedToDisplay = [Int]()
+    internal static var weeklyArray = [Int]()
     internal static var timeStrings =
         ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM",
          "2:00 AM", "2:30 AM", "3:00 AM", "3:30 AM",
@@ -27,13 +28,12 @@ class Main {
          "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM",
          "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"]
     
-    internal static var numOptions = 2
+    internal static var numOptions = 3
     internal static var timeSlots = 48
     internal static var numDays = 14
-    internal static var emptyArray =  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    internal static var emptyArray = [Int](repeating: 0, count: Main.timeSlots)
+    
+    internal static var emptyWeeklyArray = [Int](repeating: 0, count: Main.timeSlots * 7)
     
     internal static var rawDate = Date()
     internal static var today = rawDate.getLocalTime()
@@ -43,12 +43,25 @@ class Main {
     internal static var doNotDisturbCellColor = UIColor(red: 0.0, green: 122/255.0, blue: 1.0, alpha: 1.0)
     internal static var backgroundColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
     internal static var textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+    internal static var weeklyColor = UIColor(red: 178/255, green: 102/255, blue: 1, alpha: 1.0)
     
     internal static func dateToString (date: Date) -> String {
+        let temp = date.getLocalTime()
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
         dateFormatter.dateStyle = .medium
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: temp)
+    }
+    
+    internal static func getDayOfWeek(date: Date) -> Int? {
+        let string = Main.dateToString(date: date)
+        print (string) 
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        guard let todayDate = dateFormatter.date(from: string) else { return nil }
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: todayDate)
+        return weekDay
     }
     
     internal static func reloadNavBar () {

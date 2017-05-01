@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		294C39F71EB6BEBC00A828F9 /* SchedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C39F61EB6BEBC00A828F9 /* SchedTableViewCell.swift */; };
 		296A24861E723475004943B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A24851E723475004943B0 /* AppDelegate.swift */; };
 		296A248B1E723475004943B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 296A24891E723475004943B0 /* Main.storyboard */; };
 		296A248E1E723475004943B0 /* IOSProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 296A248C1E723475004943B0 /* IOSProject.xcdatamodeld */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		294C39F61EB6BEBC00A828F9 /* SchedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedTableViewCell.swift; sourceTree = "<group>"; };
 		296A24821E723475004943B0 /* IOSProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		296A24851E723475004943B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		296A248A1E723475004943B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				296A250A1E78ADD3004943B0 /* SidebarTableViewController.swift */,
 				2998950E1E7F323100CA4679 /* SettingsViewController.swift */,
 				29C3790E1E9EF3280003ACFA /* TabBarController.swift */,
+				294C39F61EB6BEBC00A828F9 /* SchedTableViewCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				296A24C31E7609AB004943B0 /* ShowGroupsViewController.swift in Sources */,
 				296A250B1E78ADD3004943B0 /* SidebarTableViewController.swift in Sources */,
 				2DCF0BCC1E85F157006E87E0 /* EventDetailViewController.swift in Sources */,
+				294C39F71EB6BEBC00A828F9 /* SchedTableViewCell.swift in Sources */,
 				296A24BD1E723C43004943B0 /* LoginViewController.swift in Sources */,
 				296A248E1E723475004943B0 /* IOSProject.xcdatamodeld in Sources */,
 				296A24C71E760BE1004943B0 /* CreateGroupViewController.swift in Sources */,

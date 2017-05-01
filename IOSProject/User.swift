@@ -51,7 +51,7 @@ class User {
         self.populateWithDoNotDisturb(completion: { () in
             completion()
         })
-        
+        self.ref.child("users").child(self.uid).child("weeklyArray").setValue(Main.weeklyArray)
         // TODO make do not disturb populate on new registered user and set sched to display
         // to todays schedule
     }
@@ -73,14 +73,38 @@ class User {
         }
     }
     
-    func toggleEntry (index: Int, date: Date) {
+    func setVal (index: Int, date: Date, val: Int) {
         let dateString = Main.dateToString(date: date)
-        Main.schedToDisplay[index] += 1
-        if (Main.schedToDisplay[index] >= Main.numOptions) {
-            Main.schedToDisplay[index] = 0
-        }
+        Main.schedToDisplay[index] = val
         let allSchedsRef = ref.child("users").child(self.uid).child("schedules")
         allSchedsRef.child(dateString).setValue(Main.schedToDisplay)
+    }
+    
+    func setWeeklyVal (index: Int, date: Date, val: Int) {
+        let dayNum = Main.getDayOfWeek(date: date)
+        let dayIndex = Main.timeSlots * dayNum!
+        let weeklyIndex = dayIndex + index
+        print (weeklyIndex)
+        Main.weeklyArray[weeklyIndex] = val
+        self.ref.child("users").child(self.uid).child("weeklyArray").setValue(Main.weeklyArray)
+    }
+
+    func getWeeklyArray (completion: @escaping ()->Void) {
+        let allSchedsRef = self.ref.child("users").child(self.uid).child("weeklyArray")
+        allSchedsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let array = snapshot.value as? [Int]
+            if (array != nil) {
+                Main.weeklyArray = array!
+                completion ()
+            }
+            else {
+                Main.weeklyArray = Main.emptyWeeklyArray
+                completion ()
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func getSched (date: Date, completion: @escaping ()->Void) {
@@ -144,11 +168,11 @@ class User {
             if (counter == Main.timeSlots) {
                 counter = 0
             }
-            currSched[counter] = 2
+            currSched[counter] = 3
             counter += 1
         }
         while (counter != startIndex) {
-            if (currSched[counter] == 2) {
+            if (currSched[counter] == 3) {
                 currSched[counter] = 0
             }
             counter += 1
@@ -276,9 +300,6 @@ class User {
                     count += 1
                 }
                 else {
-//                    if (index == Main.timeSlots - 1) {
-//                        count += 1
-//                    }
                     if (count > slotsToSearch) {
                         endIndex = index
                         startIndex = index - count

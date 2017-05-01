@@ -77,13 +77,39 @@
      */
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = scheduleTableView.cellForRow(at: indexPath)
-        cell?.contentView.backgroundColor = Main.selectedCellColor
-        Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
+        clickedCell(tableView, indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        Main.user?.toggleEntry(index: indexPath.row, date: datePicker.date)
+        clickedCell(tableView, indexPath: indexPath)
+    }
+    
+    func clickedCell (_ tableView: UITableView, indexPath: IndexPath) {
+        let cell = scheduleTableView.cellForRow(at: indexPath) as! SchedTableViewCell
+        cell.toggleCell()
+        if (cell.count == 0){
+            Main.user?.setWeeklyVal (index: indexPath.row, date: datePicker.date, val: 0)
+            cell.backgroundColor = Main.backgroundColor
+            cell.textLabel?.textColor = Main.textColor
+            cell.isSelected = false
+            cell.setSelected(false, animated: false)
+        }
+        if (cell.count == 1) {
+            cell.isSelected = true
+            cell.setSelected(true, animated: false)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            cell.contentView.backgroundColor = Main.selectedCellColor
+            cell.textLabel?.textColor = Main.textColor
+        }
+        if (cell.count == 2) {
+            Main.user?.setWeeklyVal (index: indexPath.row, date: datePicker.date, val: 1)
+            cell.isSelected = true
+            cell.setSelected(true, animated: false)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            cell.contentView.backgroundColor = Main.weeklyColor
+            cell.textLabel?.textColor = Main.textColor
+        }
+        Main.user?.setVal(index: indexPath.row, date: datePicker.date, val: cell.count)
     }
     
     func dateChanged () {
@@ -130,11 +156,18 @@
             cell.contentView.backgroundColor = Main.selectedCellColor
             cell.textLabel?.textColor = Main.textColor
             break
-        case 2:
+        case 3:
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
             cell.contentView.backgroundColor = Main.doNotDisturbCellColor
+            cell.textLabel?.textColor = Main.textColor
+            break
+        case 2:
+            cell.isSelected = true
+            cell.setSelected(true, animated: false)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            cell.contentView.backgroundColor = Main.weeklyColor
             cell.textLabel?.textColor = Main.textColor
             break
         default:

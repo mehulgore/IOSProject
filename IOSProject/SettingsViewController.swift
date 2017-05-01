@@ -96,20 +96,24 @@ class SettingsViewController: UIViewController {
     @IBAction func themePickerChanged(_ sender: UISegmentedControl) {
         switch themePicker.selectedSegmentIndex {
         case 0:
+            // default
             Main.selectedCellColor = UIColor(red: 178/255.0, green: 1.0, blue: 102/255.0, alpha: 1.0)
             Main.doNotDisturbCellColor = UIColor(red: 0.0, green: 128/255.0, blue: 1.0, alpha: 1.0)
             Main.backgroundColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+            Main.weeklyColor = UIColor(red: 178/255, green: 102/255, blue: 1, alpha: 1.0)
             self.viewWillAppear(false)
             UINavigationBar.appearance().tintColor = Main.textColor
             UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
             //Main.reloadNavBar()
         case 1:
+            // night
             Main.selectedCellColor = UIColor(red: 227/255, green: 90/255, blue: 15/255, alpha: 1.0)
             Main.doNotDisturbCellColor = UIColor(red: 238/255, green: 175/255, blue: 24/255, alpha: 1)
             Main.backgroundColor = UIColor(red: 60/255.0, green: 60/255.0, blue: 60/255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
+            Main.weeklyColor = UIColor(red: 230/255, green: 128/255, blue: 26/255, alpha: 1.0)
             self.viewWillAppear(false)
             UINavigationBar.appearance().tintColor = Main.textColor
             UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
