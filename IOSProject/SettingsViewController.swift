@@ -53,8 +53,8 @@ class SettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         UINavigationBar.appearance().tintColor = Main.textColor
-        UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.navigationController!.navigationBar.barTintColor = Main.doNotDisturbCellColor
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
         self.view.backgroundColor = Main.backgroundColor
         self.view.backgroundColor = Main.backgroundColor
         self.view.backgroundColor = Main.backgroundColor
@@ -103,10 +103,6 @@ class SettingsViewController: UIViewController {
             Main.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
             Main.weeklyColor = UIColor(red: 178/255, green: 102/255, blue: 1, alpha: 1.0)
             self.viewWillAppear(false)
-            UINavigationBar.appearance().tintColor = Main.textColor
-            UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
-            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
-            self.viewWillAppear(false)
             //Main.reloadNavBar()
         case 1:
             // night
@@ -115,10 +111,6 @@ class SettingsViewController: UIViewController {
             Main.backgroundColor = UIColor(red: 60/255.0, green: 60/255.0, blue: 60/255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
             Main.weeklyColor = UIColor(red: 178/255, green: 34/255, blue: 34/255, alpha: 1.0)
-            self.viewWillAppear(false)
-            UINavigationBar.appearance().tintColor = Main.textColor
-            UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
-            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
             self.viewWillAppear(false)
             //Main.reloadNavBar()
         default:
