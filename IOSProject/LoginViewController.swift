@@ -85,12 +85,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                                 Main.user?.clearPast()
                                                 Main.user?.fill()
                                                 Main.user?.getSched(date: Main.today, completion: { () in
-                                                    Main.user?.populateWithDoNotDisturb(completion: { () in
                                                         Main.user?.getWeeklyArray {
+                                                            Main.user?.populateWithDoNotDisturb(completion: { () in
                                                             self.shouldLogin = true
                                                             self.performSegue(withIdentifier: "login", sender: self)
+                                                            })
                                                         }
-                                                    })
                                                 })
                 })
             }) { (error) in

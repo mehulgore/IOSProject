@@ -87,8 +87,10 @@
     func clickedCell (_ tableView: UITableView, indexPath: IndexPath) {
         let cell = scheduleTableView.cellForRow(at: indexPath) as! SchedTableViewCell
         cell.toggleCell()
+        let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: datePicker.date)
         if (cell.count == 0){
             Main.user?.setWeeklyVal (index: indexPath.row, date: datePicker.date, val: 0)
+            Main.user?.setVal(index: indexPath.row, date: nextWeek!, val: cell.count)
             cell.backgroundColor = Main.backgroundColor
             cell.textLabel?.textColor = Main.textColor
             cell.isSelected = false
@@ -103,6 +105,7 @@
         }
         if (cell.count == 2) {
             Main.user?.setWeeklyVal (index: indexPath.row, date: datePicker.date, val: 1)
+            Main.user?.setVal(index: indexPath.row, date: nextWeek!, val: cell.count)
             cell.isSelected = true
             cell.setSelected(true, animated: false)
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)

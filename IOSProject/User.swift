@@ -81,8 +81,9 @@ class User {
     }
     
     func setWeeklyVal (index: Int, date: Date, val: Int) {
-        let dayNum = Main.getDayOfWeek(date: date)
-        let dayIndex = Main.timeSlots * dayNum!
+        let dayNum = Main.getDayOfWeek(date: date)! - 1
+        print (dayNum)
+        let dayIndex = Main.timeSlots * dayNum
         let weeklyIndex = dayIndex + index
         print (weeklyIndex)
         Main.weeklyArray[weeklyIndex] = val
@@ -184,6 +185,21 @@ class User {
         allSchedsRef.child(dateString).setValue(currSched)
     }
     
+    func addWeekly (array: [Int], dateString: String) -> [Int] {
+        var sched = array
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        let date = dateFormatter.date(from: dateString)
+        let dayNum = Main.getDayOfWeek(date: date!)! - 1
+        let dayIndex = Main.timeSlots * dayNum
+        for i in dayIndex ... dayIndex + Main.timeSlots - 1 {
+            if (Main.weeklyArray[i] == 1)  {
+                sched[i % 48] = 2
+            }
+        }
+        return sched
+    }
+    
     func populateWithDoNotDisturb (completion: @escaping () -> ()) {
         let doNotDisturbRef = ref.child("users").child(self.uid).child("doNotDisturb")
         doNotDisturbRef.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -196,8 +212,9 @@ class User {
                 // Get user value
                 let scheds = Snapshot.value as! NSDictionary
                 for (key, value) in scheds {
-                    let sched = value as! [Int]
+                    var sched = value as! [Int]
                     let dateString = key as! String
+                    sched = self.addWeekly(array: sched, dateString: dateString)
                     self.addDoNotDisturb (dateString: dateString, startTime: self.doNotDisturbStart, stopTime: self.doNotDisturbStop, array: sched)
                 }
                 completion()

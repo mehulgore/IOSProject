@@ -46,11 +46,10 @@ class Main {
     internal static var weeklyColor = UIColor(red: 178/255, green: 102/255, blue: 1, alpha: 1.0)
     
     internal static func dateToString (date: Date) -> String {
-        let temp = date.getLocalTime()
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
         dateFormatter.dateStyle = .medium
-        return dateFormatter.string(from: temp)
+        return dateFormatter.string(from: date)
     }
     
     internal static func getDayOfWeek(date: Date) -> Int? {

@@ -106,6 +106,7 @@ class SettingsViewController: UIViewController {
             UINavigationBar.appearance().tintColor = Main.textColor
             UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+            self.viewWillAppear(false)
             //Main.reloadNavBar()
         case 1:
             // night
@@ -113,11 +114,12 @@ class SettingsViewController: UIViewController {
             Main.doNotDisturbCellColor = UIColor(red: 238/255, green: 175/255, blue: 24/255, alpha: 1)
             Main.backgroundColor = UIColor(red: 60/255.0, green: 60/255.0, blue: 60/255.0, alpha: 1.0)
             Main.textColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
-            Main.weeklyColor = UIColor(red: 230/255, green: 128/255, blue: 26/255, alpha: 1.0)
+            Main.weeklyColor = UIColor(red: 178/255, green: 34/255, blue: 34/255, alpha: 1.0)
             self.viewWillAppear(false)
             UINavigationBar.appearance().tintColor = Main.textColor
             UINavigationBar.appearance().barTintColor = Main.doNotDisturbCellColor
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+            self.viewWillAppear(false)
             //Main.reloadNavBar()
         default:
             break
