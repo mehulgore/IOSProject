@@ -48,7 +48,14 @@ class SettingsViewController: UIViewController {
         self.startTimePicker.setValue(false, forKey: "highlightsToday")
         self.stopTimePicker.setValue(Main.textColor, forKeyPath: "textColor")
         self.stopTimePicker.setValue(false, forKey: "highlightsToday")
-        // Do any additional setup after loading the view.
+        
+        // Set appropriate selectedSementIndex for themePicker
+        switch Main.doNotDisturbCellColor {
+        case UIColor(red: 238/255, green: 175/255, blue: 24/255, alpha: 1):
+            self.themePicker.selectedSegmentIndex = 1
+        default:
+            self.themePicker.selectedSegmentIndex = 0
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

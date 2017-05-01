@@ -87,13 +87,9 @@ class Main {
 extension Date {
     // return local time date object
     func getLocalTime() -> Date {
-        // set time zone
         let timeZone = NSTimeZone.local
-        // used to set granularity of time
         let seconds : TimeInterval = Double(timeZone.secondsFromGMT(for:self as Date))
-        // convert from absolute to local time
         let localDate = Date(timeInterval: seconds, since: self as Date)
-        // return localDate
         return localDate
     }
 }
