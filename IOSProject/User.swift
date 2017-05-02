@@ -46,12 +46,13 @@ class User {
             allSchedsRef.updateChildValues([Main.dateToString(date: temp): Main.emptyArray])
             temp = Calendar.current.date(byAdding: .day, value: 1, to: temp)!
         }
+        Main.weeklyArray = Main.emptyWeeklyArray
+        self.ref.child("users").child(self.uid).child("weeklyArray").setValue(Main.emptyWeeklyArray)
         self.setDoNotDisturbTime(type: "startTime", time: "12:00 AM")
         self.setDoNotDisturbTime(type: "stopTime", time: "8:00 AM")
         self.populateWithDoNotDisturb(completion: { () in
             completion()
         })
-        self.ref.child("users").child(self.uid).child("weeklyArray").setValue(Main.weeklyArray)
         // TODO make do not disturb populate on new registered user and set sched to display
         // to todays schedule
     }

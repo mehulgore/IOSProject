@@ -41,11 +41,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginClicked(_ sender: UIButton) {
-        //let email = emailTextField.text!
-        //let password = passwordTextField.text!
-        
-        let email = "jj@gmail.com"
-        let password = "password"
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
         
         if (email == "" || password == "") {
             let alert = UIAlertController(title: "Error", message: "Did not fill out all fields!", preferredStyle: UIAlertControllerStyle.alert)
