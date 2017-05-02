@@ -47,12 +47,26 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
         stepper.tintColor = Main.doNotDisturbCellColor
         
         didSelect = 0
-        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups")
+        let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!)
         ref.observeSingleEvent(of: .value, with: { (Snapshot) in
-            // Get user value
-            let groupDict = Snapshot.value as! NSDictionary
-            self.groups = groupDict.allKeys as! [String]
-            self.groupTableView.reloadData()
+            if Snapshot.hasChild("groups"){
+                let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!).child("groups")
+                ref.observeSingleEvent(of: .value, with: { (Snapshot) in
+                    let groupDict = Snapshot.value as! NSDictionary
+                    self.groups = groupDict.allKeys as! [String]
+                    self.groupTableView.reloadData()
+                }) { (error) in
+                    print(error.localizedDescription)
+                }
+            }
+            else{
+                let alert = UIAlertController(title: "Error", message: "You must create a group before creating an event", preferredStyle: UIAlertControllerStyle.alert)
+                let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) { (action:UIAlertAction) in
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
