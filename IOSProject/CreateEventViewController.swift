@@ -16,8 +16,11 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var durationLabel: UILabel!
     
+    @IBOutlet weak var durationTxt: UILabel!
+    @IBOutlet weak var hoursLabel: UILabel!
     @IBOutlet weak var stepper: UIStepper!
     
+    @IBOutlet weak var selectGroupLabel: UILabel!
     var groups = [String]()
     
     var groupName = ""
@@ -45,6 +48,14 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
         createButton.backgroundColor = Main.doNotDisturbCellColor
         createButton.layer.cornerRadius = 15
         stepper.tintColor = Main.doNotDisturbCellColor
+        self.eventNameTextField.textColor = Main.textColor
+        self.durationLabel.textColor = Main.textColor
+        self.hoursLabel.textColor = Main.textColor
+        self.durationTxt.textColor = Main.textColor
+        self.selectGroupLabel.textColor = Main.textColor
+        
+        self.eventNameTextField.attributedPlaceholder =
+            NSAttributedString(string: "Event Name", attributes: [NSForegroundColorAttributeName : Main.textColor])
         
         didSelect = 0
         let ref = FIRDatabase.database().reference().child("users").child((Main.user?.uid)!)

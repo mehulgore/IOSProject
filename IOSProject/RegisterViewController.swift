@@ -72,6 +72,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        if (password1.characters.count < 6) {
+            let alert = UIAlertController(title: "Error", message: "Password must be at least 6 characters", preferredStyle: UIAlertControllerStyle.alert)
+            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) { (action:UIAlertAction) in
+            }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         FIRAuth.auth()?.createUser(withEmail: email, password: password1, completion:
             { (user:  FIRUser?, error) in
                 

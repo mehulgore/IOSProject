@@ -15,6 +15,7 @@
     // properties
     @IBOutlet weak var scheduleTableView: UITableView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var instructionLabel: UILabel!
     var isSidebarShowing = false
     
     override func viewDidLoad() {
@@ -50,6 +51,10 @@
                 self.scheduleTableView.reloadData()
             })
         })
+        UINavigationBar.appearance().tintColor = Main.textColor
+        self.navigationController!.navigationBar.barTintColor = Main.doNotDisturbCellColor
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Main.textColor]
+        self.instructionLabel.textColor = Main.textColor
     }
     
     

@@ -110,7 +110,6 @@ class SettingsViewController: UIViewController {
             Main.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
             Main.weeklyColor = UIColor(red: 178/255, green: 102/255, blue: 1, alpha: 1.0)
             self.viewWillAppear(false)
-            //Main.reloadNavBar()
         case 1:
             // night
             Main.selectedCellColor = UIColor(red: 227/255, green: 90/255, blue: 15/255, alpha: 1.0)
@@ -119,7 +118,6 @@ class SettingsViewController: UIViewController {
             Main.textColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
             Main.weeklyColor = UIColor(red: 178/255, green: 34/255, blue: 34/255, alpha: 1.0)
             self.viewWillAppear(false)
-            //Main.reloadNavBar()
         default:
             break
         }

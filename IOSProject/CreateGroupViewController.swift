@@ -16,6 +16,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var groupTableView: UITableView!
     
+    @IBOutlet weak var groupMembersLabel: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var groupNameTextField: UITextField!
     
@@ -205,6 +206,10 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         self.friendsTableView.backgroundColor = Main.backgroundColor
         self.groupTableView.backgroundColor = Main.backgroundColor
         createButton.backgroundColor = Main.doNotDisturbCellColor
+        self.groupNameTextField.textColor = Main.textColor
+        self.groupNameTextField.attributedPlaceholder =
+            NSAttributedString(string: "Group Name", attributes: [NSForegroundColorAttributeName : Main.textColor])
+        self.groupMembersLabel.textColor = Main.textColor
     }
     
     
