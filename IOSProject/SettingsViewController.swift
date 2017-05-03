@@ -12,9 +12,14 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var startTimePicker: UIDatePicker!
     
+    @IBOutlet weak var doNotDisturbLabel: UILabel!
+    @IBOutlet weak var startTimeLabel: UILabel!
+    @IBOutlet weak var endTimeLabel: UILabel!
+    
     @IBOutlet weak var stopTimePicker: UIDatePicker!
     
     @IBOutlet weak var themePicker: UISegmentedControl!
+    @IBOutlet weak var themeLabel: UILabel!
     
     var startTime = ""
     var stopTime = ""
@@ -65,6 +70,10 @@ class SettingsViewController: UIViewController {
         self.view.backgroundColor = Main.backgroundColor
         self.view.backgroundColor = Main.backgroundColor
         self.view.backgroundColor = Main.backgroundColor
+        self.doNotDisturbLabel.textColor = Main.textColor
+        self.startTimeLabel.textColor = Main.textColor
+        self.endTimeLabel.textColor = Main.textColor
+        self.themeLabel.textColor = Main.textColor
         self.startTimePicker.setValue(Main.textColor, forKeyPath: "textColor")
         self.startTimePicker.setValue(false, forKey: "highlightsToday")
         self.stopTimePicker.setValue(Main.textColor, forKeyPath: "textColor")
