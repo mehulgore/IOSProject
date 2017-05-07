@@ -21,3 +21,10 @@ Special Instructions:
 	Cocoa Pods used 
 	Firebase
 	Need IOS 10+
+
+	Could not test on iPhone 7 Plus as we did not have access to the right
+	device, so constraints are in place but not tested. If run on simulator
+	for iPhone 7 Plus, in Main.storyboard, the left side UIView inside the
+	ContainerViewController should have a trailing space constraint set
+	to 416 instead of 375 (for iPhone 7) to shift everything to the right
+	place. 

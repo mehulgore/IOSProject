@@ -138,7 +138,12 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView == self.friendsTableView) {
             let cell = tableView.cellForRow(at: indexPath)
-            self.name = (cell?.textLabel?.text)!
+            if ((cell?.textLabel?.text) != nil) {
+                self.name = (cell?.textLabel?.text)!
+            }
+            else {
+                self.name = "default name"
+            }
             self.uid = self.userNamesDict[name]!
             groupUsers[self.name] = self.uid
             self.groupTableView.reloadData()
